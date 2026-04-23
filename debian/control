@@ -1,0 +1,251 @@
+Source: sonic-desktop-interface
+Section: kde
+Maintainer: NexusSfan <nexussfan@duck.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-exec,
+               dh-sequence-kf6,
+               dh-sequence-pkgkde-symbolshelper,
+               dh-sequence-qmldeps,
+               cmake (>= 3.16~),
+               extra-cmake-modules (>= 6.22.0~),
+               gettext,
+               kded6-dev,
+               kirigami-addons-dev,
+               kscreenlocker-dev (>= 6.6~),
+               kwin-dev (>= 4:6.6~),
+               libaccounts-qt6-dev (>= 1.13~),
+               libcanberra-dev,
+               libfontconfig-dev,
+               libfreetype-dev,
+               libglib2.0-dev,
+               libibus-1.0-dev (>= 1.5.0~),
+               libicu-dev,
+               libkaccounts6-dev (>= 4:20.04~),
+               libkf6attica-dev (>= 6.22.0~),
+               libkf6auth-dev (>= 6.22.0~),
+               libkf6baloo-dev (>= 6.22.0~),
+               libkf6codecs-dev (>= 6.22.0~),
+               libkf6config-dev (>= 6.22.0~),
+               libkf6coreaddons-dev (>= 6.22.0~),
+               libkf6crash-dev (>= 6.22.0~),
+               libkf6dbusaddons-dev (>= 6.22.0~),
+               libkf6declarative-dev,
+               libkf6doctools-dev (>= 6.22.0~),
+               libkf6globalaccel-dev (>= 6.22.0~),
+               libkf6guiaddons-dev (>= 6.22.0~),
+               libkf6i18n-dev (>= 6.22.0~),
+               libkf6iconthemes-dev (>= 6.22.0~),
+               libkf6itemmodels-dev (>= 6.2.0~),
+               libkf6kcmutils-dev (>= 6.22.0~),
+               libkf6kio-dev (>= 6.22.0~),
+               libkf6newstuff-dev (>= 6.22.0~),
+               libkf6notifications-dev (>= 6.22.0~),
+               libkf6notifyconfig-dev (>= 6.22.0~),
+               libkf6package-dev (>= 6.22.0~),
+               libkf6qqc2desktopstyle-dev (>= 6.22.0~),
+               libkf6runner-dev (>= 6.22.0~),
+               libkf6sonnet-dev (>= 6.22.0~),
+               libkf6svg-dev (>= 6.22.0~),
+               libkf6widgetsaddons-dev (>= 6.22.0~),
+               libkf6xmlgui-dev (>= 6.22.0~),
+               libkirigami-dev (>= 6.22.0~),
+               libksysguard-dev (>= 4:6.6~),
+               libpackagekitqt6-dev,
+               libplasma-dev (>= 6.6.3~),
+               libplasma5support-dev (>= 4:6.6.3~),
+               libplasmaactivities-dev (>= 6.6.3~),
+               libplasmaactivitiesstats-dev (>= 6.6.3~),
+               libscim-dev,
+               libsdl2-dev (>= 2.0.16~),
+               libudev-dev,
+               libwayland-dev (>= 1.22~),
+               libx11-dev,
+               libx11-xcb-dev,
+               libxcb-image0-dev,
+               libxcb-keysyms1-dev,
+               libxcb-record0-dev,
+               libxcb-shm0-dev,
+               libxcb-util-dev,
+               libxcb-xinput-dev,
+               libxcb-xkb-dev,
+               libxcb1-dev,
+               libxft-dev,
+               libxkbregistry-dev,
+               pkgconf,
+               plasma-workspace-dev (>= 4:6.6.3~),
+               plasma-pa,
+               qml6-module-org-kde-graphicaleffects,
+               qml6-module-org-kde-pipewire,
+               qt6-5compat-dev (>= 6.10.0~),
+               qt6-base-dev (>= 6.10.0~),
+               qt6-base-private-dev,
+               qt6-declarative-dev (>= 6.10.0~),
+               qt6-declarative-private-dev,
+               qt6-shadertools-dev (>= 6.10.0~),
+               qt6-svg-dev (>= 6.10.0~),
+               qt6-wayland-dev (>= 6.10.0~),
+               signon-plugin-oauth2-dev (>= 0.25+git20231015.fab69886-2~),
+               signon-plugins-dev (>= 8.61+git20231015.c8ad982-2~),
+               wayland-protocols (>= 1.44~),
+               xdg-user-dirs,
+               xserver-xorg-dev,
+               xserver-xorg-input-libinput-dev,
+Standards-Version: 4.7.3
+Homepage: https://github.com/Sonic-DE/sonic-desktop-interface
+Vcs-Browser: https://github.com/sonicde-debian/sonic-desktop-interface
+Vcs-Git: https://github.com/sonicde-debian/sonic-desktop-interface.git
+
+Package: libsonicglobalaccelmodel6
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+Breaks: libkglobalaccelmodel6,
+Replaces: libkglobalaccelmodel6,
+Description: Sonic DE global shortcut runner
+ A runner to perform actions from the global shortcuts, useful when an action
+ is not assigned to any shortcut, or when the user wants to find the action
+ name corresponding to a shortcut.
+
+Package: sonic-desktop-interface
+Architecture: any
+Depends: accountsservice,
+         breeze (>= 4:6.2.90~),
+         kactivitymanagerd (>= 6.2.90~),
+         kde-cli-tools (>= 4:6.2.90~),
+         kded6,
+         kio6 (>= 6.13.0-4~),
+         layer-shell-qt (>= 6.2.90~),
+         ocean-sound-theme (>= 6.2.90~),
+         oxygen-sounds (>= 4:6.2.90~),
+         sonic-desktop-interface-data (= ${source:Version}),
+         sonic-desktoptheme,
+         plasma-integration (>= 6.2.90~),
+         sonic-workspace (>= 4:6.2.90~),
+         polkit-kde-agent-1 (>= 4:6.2.90~),
+         qt6-svg-plugins,
+         ${misc:Depends},
+         ${qml6:Depends},
+         ${shlibs:Depends},
+Recommends: bluedevil (>= 4:6.2.90~),
+            breeze-gtk-theme (>= 6.2.90~),
+            fonts-hack,
+            fonts-noto,
+            fonts-noto-color-emoji,
+            ibus-data,
+            kde-config-gtk-style (>= 4:6.2.90~),
+            kde-config-screenlocker (>= 6.2.90~),
+            kde-config-sddm (>= 4:6.2.90~),
+            kde-spectacle,
+            kgamma (>= 6.2.90~),
+            khelpcenter,
+            sonic-system-info (>= 4:6.2.90~),
+            kio-extras,
+            kmenuedit (>= 4:6.2.90~),
+            kscreen (>= 4:6.2.90~),
+            ksshaskpass (>= 4:6.2.90~),
+            sonic-win (>= 4:6.2.90~),
+            kwrited (>= 4:6.2.90~),
+            libkf6kcmutils-bin,
+            libpam-kwallet5 (>= 6.2.90~),
+            plasma-browser-integration (>= 6.2.90~),
+            plasma-desktop-doc (>= ${source:Version}),
+            plasma-discover (>= 6.2.90~),
+            plasma-disks (>= 6.2.90~),
+            plasma-firewall (>= 6.2.90~),
+            plasma-nm (>= 4:6.2.90~),
+            plasma-pa (>= 4:6.2.90~),
+            plasma-systemmonitor (>= 6.2.90~),
+            plasma-thunderbolt (>= 6.2.90~),
+            plasma-vault (>= 6.2.90~),
+            plasma-welcome (>= 6.2.90~),
+            powerdevil (>= 4:6.2.90~),
+            systemsettings (>= 4:6.2.90~),
+            xdg-desktop-portal-gtk,
+            xdg-desktop-portal-kde (>= 6.2.90~),
+Suggests: kde-config-flatpak (>= 6.2.90~),
+          plasma-theme-oxygen,
+Breaks: plasma-desktop-data (<< 4:6.3.2-3~),
+        plasma-workspace (<< 4:6.1.0~),
+        user-manager (<< 4:5.20),
+        plasma-desktop,
+Replaces: plasma-desktop-data (<< 4:6.3.2-3~),
+          plasma-workspace (<< 4:6.1.0~),
+          plasma-desktop,
+Description: Tools and widgets for the desktop
+ Sonic DE offers a beautiful looking desktop
+ that takes complete advantage of modern computing technology.
+ Through the use of visual effects and scalable graphics,
+ the desktop experience is not only smooth but also pleasant
+ to the eye. The looks of Sonic DE not only provide beauty,
+ they are also used to support and improve your computer
+ activities effectively, without being distracting.
+ .
+ This package is part of Sonic DE.
+
+Package: sonic-desktop-interface-data
+Architecture: all
+Multi-Arch: foreign
+Depends: python3:any,
+         ${misc:Depends},
+         ${qml6:Depends},
+Breaks: plasma-widgets-addons (<< 4:5.25.70~),
+        plasma-desktop-data,
+Replaces: plasma-widgets-addons (<< 4:5.25.70~),
+          plasma-desktop-data,
+Description: Tools and widgets for the desktop data files
+ Sonic DE offers a beautiful looking desktop
+ that takes complete advantage of modern computing technology.
+ Through the use of visual effects and scalable graphics,
+ the desktop experience is not only smooth but also pleasant
+ to the eye. The looks of Sonic DE not only provide beauty,
+ they are also used to support and improve your computer
+ activities effectively, without being distracting.
+ .
+ This package is part of Sonic DE.
+ .
+ This package contains the data files for the Sonic shell.
+
+Package: sonic-desktop-interface-dev
+Section: devel
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ${so:Depends},
+Breaks: plasma-desktop-dev,
+Replaces: plasma-desktop-dev,
+Description: Tools and widgets for the desktop
+ Sonic DE offers a beautiful looking desktop
+ that takes complete advantage of modern computing technology.
+ Through the use of visual effects and scalable graphics,
+ the desktop experience is not only smooth but also pleasant
+ to the eye. The looks of Sonic DE not only provide beauty,
+ they are also used to support and improve your computer
+ activities effectively, without being distracting.
+ .
+ This package is part of Sonic DE.
+ .
+ This package contains the development files for the Sonic shell.
+
+Package: sonic-desktop-interface-doc
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+Breaks: plasma-desktop-data (<< 4:6.1.90~),
+        plasma-desktop-doc,
+Replaces: plasma-desktop-data (<< 4:6.1.90~),
+          plasma-desktop-doc,
+Description: Sonic desktop documentation
+ Sonic DE offers a beautiful looking desktop
+ that takes complete advantage of modern computing technology.
+ Through the use of visual effects and scalable graphics,
+ the desktop experience is not only smooth but also pleasant
+ to the eye. The looks of Sonic DE not only provide beauty,
+ they are also used to support and improve your computer
+ activities effectively, without being distracting.
+ .
+ This package is part of Sonic DE.
+ .
+ This package contains the documentation for the Sonic shell.
+ 

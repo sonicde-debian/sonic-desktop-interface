@@ -1,0 +1,2 @@
+#cmakedefine01 BUILD_KCM_MOUSE_X11
+#cmakedefine01 BUILD_KCM_TOUCHPAD_X11

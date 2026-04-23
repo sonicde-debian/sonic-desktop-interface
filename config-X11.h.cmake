@@ -1,0 +1,2 @@
+#cmakedefine01 HAVE_XCURSOR
+#cmakedefine01 HAVE_XORGLIBINPUT

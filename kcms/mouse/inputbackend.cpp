@@ -1,0 +1,49 @@
+/*
+    SPDX-FileCopyrightText: 2017 Xuetian Weng <wengxt@gmail.com>
+    SPDX-FileCopyrightText: 2018 Roman Gilg <subdiff@gmail.com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+#include "inputbackend.h"
+#include "logging.h"
+
+#include <KWindowSystem>
+
+#include <qqml.h>
+
+#if BUILD_KCM_MOUSE_X11
+#include "backends/x11/x11_libinput_backend.h"
+#include <X11/Xlib.h>
+#include <libinput-properties.h>
+#include <private/qtx11extras_p.h>
+#endif
+
+std::unique_ptr<InputBackend> InputBackend::create()
+{
+    // There are multiple possible backends
+#if BUILD_KCM_MOUSE_X11
+    {
+        qCDebug(KCM_MOUSE) << "Using X11 backend";
+
+        Atom testAtom = XInternAtom(QX11Info::display(), LIBINPUT_PROP_ACCEL, True);
+
+        if (testAtom) {
+            qCDebug(KCM_MOUSE) << "Using libinput driver on X11.";
+            return std::make_unique<X11LibinputBackend>();
+        }
+    }
+#endif
+    qCCritical(KCM_MOUSE) << "Not able to select appropriate backend.";
+    return nullptr;
+}
+
+void InputBackend::registerImplementationTypes(const char *uri)
+{
+#if BUILD_KCM_MOUSE_X11
+    qmlRegisterUncreatableType<X11LibinputBackend>(uri, 1, 0, "X11LibinputBackend", QString());
+#endif
+}
+
+#include <fixx11h.h>
+
+#include "moc_inputbackend.cpp"

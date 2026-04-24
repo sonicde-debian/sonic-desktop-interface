@@ -100,8 +100,8 @@ Architecture: any
 Multi-Arch: same
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-Breaks: libkglobalaccelmodel6,
-Replaces: libkglobalaccelmodel6,
+Conflicts: libkglobalaccelmodel6,
+Provides: libkglobalaccelmodel6,
 Description: Sonic DE global shortcut runner
  A runner to perform actions from the global shortcuts, useful when an action
  is not assigned to any shortcut, or when the user wants to find the action
@@ -165,10 +165,11 @@ Recommends: bluedevil (>= 4:6.2.90~),
             xdg-desktop-portal-kde (>= 6.2.90~),
 Suggests: kde-config-flatpak (>= 6.2.90~),
           plasma-theme-oxygen,
-Breaks: plasma-desktop-data (<< 4:6.3.2-3~),
+Conflicts: plasma-desktop-data (<< 4:6.3.2-3~),
         plasma-workspace (<< 4:6.1.0~),
         user-manager (<< 4:5.20),
         plasma-desktop,
+Provides: plasma-desktop (= ${binary:Version})
 Replaces: plasma-desktop-data (<< 4:6.3.2-3~),
           plasma-workspace (<< 4:6.1.0~),
           plasma-desktop,
@@ -189,10 +190,11 @@ Multi-Arch: foreign
 Depends: python3:any,
          ${misc:Depends},
          ${qml6:Depends},
-Breaks: plasma-widgets-addons (<< 4:5.25.70~),
+Conflicts: plasma-widgets-addons (<< 4:5.25.70~),
         plasma-desktop-data,
 Replaces: plasma-widgets-addons (<< 4:5.25.70~),
           plasma-desktop-data,
+Provides: plasma-desktop-data (= ${binary:Version}),
 Description: Tools and widgets for the desktop data files
  Sonic DE offers a beautiful looking desktop
  that takes complete advantage of modern computing technology.
@@ -212,8 +214,8 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          ${so:Depends},
-Breaks: plasma-desktop-dev,
-Replaces: plasma-desktop-dev,
+Conflicts: plasma-desktop-dev,
+Provides: plasma-desktop-data (= ${binary:Version}),
 Description: Tools and widgets for the desktop
  Sonic DE offers a beautiful looking desktop
  that takes complete advantage of modern computing technology.
@@ -232,10 +234,11 @@ Section: doc
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends},
-Breaks: plasma-desktop-data (<< 4:6.1.90~),
+Conflicts: plasma-desktop-data (<< 4:6.1.90~),
         plasma-desktop-doc,
 Replaces: plasma-desktop-data (<< 4:6.1.90~),
           plasma-desktop-doc,
+Provides: plasma-desktop-doc (= ${binary:Version}),
 Description: Sonic desktop documentation
  Sonic DE offers a beautiful looking desktop
  that takes complete advantage of modern computing technology.

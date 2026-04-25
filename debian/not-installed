@@ -1,0 +1,7 @@
+usr/share/sddm/themes/breeze/*.qml
+usr/share/sddm/themes/breeze/*.sh
+usr/share/sddm/themes/breeze/*.svg
+usr/share/sddm/themes/breeze/faces/.face.icon
+usr/share/sddm/themes/breeze/*.desktop
+usr/share/sddm/themes/breeze/*.png
+usr/share/sddm/themes/breeze/*.conf

@@ -4,6 +4,8 @@ usr/lib/*/libexec/
 usr/lib/*/qt6/plugins/
 usr/lib/*/qt6/qml/org/kde/plasma/
 usr/lib/*/qt6/qml/org/kde/private/
+usr/lib/*/libkglobalaccelmod.so.6
+usr/lib/*/libkglobalaccelmod.so.6.*
 usr/lib/kf6/kauth/libexec/kcmdatetimehelper
 usr/lib/systemd/user/plasma-kaccess.service
 usr/share/applications/

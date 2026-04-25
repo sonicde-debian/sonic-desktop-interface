@@ -5,5 +5,5 @@ usr/share/sddm/themes/breeze/faces/.face.icon
 usr/share/sddm/themes/breeze/*.desktop
 usr/share/sddm/themes/breeze/*.png
 usr/share/sddm/themes/breeze/*.conf
-usr/lib/*/libkglobalaccelmod.so.6
-usr/lib/*/libkglobalaccelmod.so.6.*
+usr/lib/{DEB_HOST_MULTIARCH}/libkglobalaccelmod.so.6
+usr/lib/{DEB_HOST_MULTIARCH}/libkglobalaccelmod.so.6.*

@@ -6,4 +6,3 @@ org.kde.plasma.private.pager
 org.kde.private.desktopcontainment.*
 org.kde.plasma.activityswitcher
 org.kde.plasma.private.kicker
-org.kde.kscreenlocker

@@ -169,7 +169,7 @@ Conflicts: plasma-desktop-data (<< 4:6.3.2-3~),
         plasma-workspace (<< 4:6.1.0~),
         user-manager (<< 4:5.20),
         plasma-desktop,
-Provides: plasma-desktop (= ${binary:Version})
+Provides: plasma-desktop (= ${binary:Version}),
 Replaces: plasma-desktop-data (<< 4:6.3.2-3~),
           plasma-workspace (<< 4:6.1.0~),
           plasma-desktop,

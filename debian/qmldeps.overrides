@@ -1,1 +1,7 @@
 org.kde.kscreenlocker kde-config-sonic-screenlocker
+org.kde.plasma.workspace.osd sonic-workspace
+org.kde.plasma.workspace.components sonic-workspace
+org.kde.plasma.private.keyboardindicator sonic-workspace
+org.kde.plasma.private.sessions sonic-workspace
+org.kde.plasma.private.mpris sonic-workspace
+org.kde.breeze.components sonic-workspace

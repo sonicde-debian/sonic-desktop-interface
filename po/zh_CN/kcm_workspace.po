@@ -301,13 +301,13 @@ msgstr ""
 #, kde-format
 msgctxt "As in: 'Touch Mode is always enabled'"
 msgid "Always active"
-msgstr "总是启用"
+msgstr "始终启用"
 
 #: ui/main.qml:463
 #, kde-format
 msgctxt "As in: 'Touch Mode is never enabled'"
 msgid "Disabled"
-msgstr "禁用"
+msgstr "已禁用"
 
 #: ui/main.qml:486
 #, kde-format

@@ -38,11 +38,20 @@ ItemAbstractDelegate {
     }
 
     onClicked: {
-        if (!item.hasChildren) {
+        if (!item.hasChildren && !dragHandler.active) {
             item.baseModel.trigger(index, "", null);
             item.interactionConcluded()
         }
     }
+
+    Keys.onReturnPressed: event => {
+        if (!item.hasChildren) {
+            item.clicked()
+        } else {
+            event.accepted = false
+        }
+    }
+    Keys.onEnterPressed: event => item.Keys.returnPressed(event)
 
     contentItem: RowLayout {
         id: row
@@ -117,6 +126,7 @@ ItemAbstractDelegate {
     }
 
     DragHandler {
+        id: dragHandler
         target: null
         onActiveChanged: {
             if (active && item.url) {

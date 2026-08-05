@@ -143,6 +143,7 @@ ColumnLayout {
                           ? "" : root.title
                     color: (headerHoverHandler.visible && headerHoverHighlight.pressed) ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
                     opacity: 0.75
+                    font.bold: toolTipDelegate.isGroup && toolTipDelegate.parentTask.model.IsActive && root.index == tasksModel.activeTask.row
                     visible: root.orientation === ListView.Horizontal || text.length !== 0
                     textFormat: Text.PlainText
                 }
@@ -174,10 +175,9 @@ ColumnLayout {
                 Layout.preferredWidth: closeButton.width
                 visible: root.index === 0 && toolTipDelegate.smartLauncherCountVisible
 
-                Badge {
+                Kirigami.Badge {
                     anchors.centerIn: parent
-                    height: Kirigami.Units.iconSizes.smallMedium
-                    number: toolTipDelegate.smartLauncherCount
+                    text: toolTipDelegate.smartLauncherCount
                 }
             }
 

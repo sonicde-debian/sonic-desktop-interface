@@ -10,6 +10,8 @@
 
 #include "debug.h"
 
+#include <qqml.h>
+
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusPendingCall>
@@ -239,4 +241,3 @@ void KDEDConfig::defaults()
 }
 
 #include "kcmkded.moc"
-#include "moc_kcmkded.cpp"

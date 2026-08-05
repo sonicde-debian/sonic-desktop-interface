@@ -5,6 +5,13 @@ target_sources(EmojierDeclarativePlugin PRIVATE
     emojierplugin.cpp
     emojidict.cpp
     emojicategory.cpp
+    ${CMAKE_SOURCE_DIR}/messagelogger.cpp
+)
+
+ecm_qt_declare_logging_category(EmojierDeclarativePlugin
+    HEADER emojier_debug.h
+    IDENTIFIER EMOJIER_LOG
+    CATEGORY_NAME org.kde.plasma.emojier
 )
 
 kconfig_add_kcfg_files(EmojierDeclarativePlugin emojiersettings.kcfgc GENERATE_MOC)

@@ -1,14 +1,16 @@
+set(CMAKE_AUTOMOC ON)
+
 cmake_minimum_required(VERSION 3.16)
 
 project(plasma-desktop)
 
-set(PROJECT_VERSION "6.6.5")
+set(PROJECT_VERSION "6.7.2")
 string(REPLACE "." ";" VERSION_LIST ${PROJECT_VERSION})
 list(GET VERSION_LIST 0 PROJECT_VERSION_MAJOR)
 
-set(PROJECT_DEP_VERSION "6.6.5")
+set(PROJECT_DEP_VERSION "6.7.0")
 set(QT_MIN_VERSION "6.10.0")
-set(KF6_MIN_VERSION "6.22.0")
+set(KF6_MIN_VERSION "6.26.0")
 set(ACCOUNTSQT_DEP_VERSION "1.13")
 
 set(CMAKE_CXX_STANDARD 20)
@@ -37,6 +39,14 @@ include(KDEGitCommitHooks)
 include(ECMQmlModule)
 include(ECMConfiguredInstall)
 
+include_directories(${CMAKE_SOURCE_DIR})
+
+# Populate QMessageLogContext::category / file / line in Qt log messages.
+# This is required for the project-wide message handler (see messagelogger.cpp)
+# to record the originating QLoggingCategory per line. See:
+# https://doc.qt.io/qt-6/qmessagelogcontext.html
+add_compile_definitions(QT_MESSAGELOGCONTEXT)
+
 option(BUILD_DOC "Whether to build the documentation" ON)
 option(BUILD_KCM_MOUSE_X11 "Build the Mouse KCM's X11 backend" ON)
 option(BUILD_KCM_TOUCHPAD_X11 "Build the Touchpad KCM's X11 backend" ON)
@@ -57,6 +67,8 @@ find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
     find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
 endif()
+
+qt_policy(SET QTP0004 NEW)
 
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
     Auth
@@ -196,7 +208,7 @@ find_package(UDev)
 set_package_properties(UDev PROPERTIES
     DESCRIPTION "API for enumerating and introspecting local devices (part of systemd)"
     URL "https://www.freedesktop.org/wiki/Software/systemd/"
-    PURPOSE "Required for device discovery in keyboard daemon and game controller kcm"
+    PURPOSE "Required for device discovery in game controller kcm"
     TYPE OPTIONAL
 )
 
@@ -258,6 +270,10 @@ ecm_setup_version(${PROJECT_VERSION} VARIABLE_PREFIX PLASMA VERSION_HEADER plasm
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
+add_definitions(
+    -DQT_NO_CONTEXTLESS_CONNECT
+)
+
 configure_file(config-workspace.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-workspace.h)
 configure_file(config-X11.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-X11.h)
 configure_file(config-build-options.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-build-options.h)
@@ -302,6 +318,9 @@ endif()
 install(FILES org.kde.plasmashell.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(FILES kde-mimeapps.list DESTINATION ${KDE_INSTALL_APPDIR})
 
+install(FILES kconf_update/50-krunner-activate-typing.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
+install(PROGRAMS kconf_update/50-krunner-activate-typing.sh DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
+
 # add clang-format target for all our real source files
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 list(FILTER ALL_CLANG_FORMAT_SOURCE_FILES EXCLUDE REGEX ".ccls-cache")
@@ -332,3 +351,5 @@ if(BUILD_DOC)
 endif()
 
 ki18n_install(po)
+
+

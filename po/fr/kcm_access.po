@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmaccess\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-08 00:45+0000\n"
-"PO-Revision-Date: 2026-01-10 10:20+0100\n"
+"POT-Creation-Date: 2026-05-22 02:48+0000\n"
+"PO-Revision-Date: 2026-05-02 11:48+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -625,7 +625,7 @@ msgstr ""
 "Utilisez des raccourcis pour activer / désactiver l'inversion des couleurs "
 "de l'affichage et de la fenêtre"
 
-#: ui/Invert.qml:49 ui/ZoomMagnifier.qml:376
+#: ui/Invert.qml:49 ui/ZoomMagnifier.qml:388
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Shortcuts…"
@@ -905,18 +905,22 @@ msgstr "Activer"
 #, kde-kuit-format
 msgctxt "@info:tooltip"
 msgid ""
-"The numpad key <shortcut>5</shortcut> functions as a mouse click. The keys "
-"<shortcut>2</shortcut>, <shortcut>4</shortcut>, <shortcut>6</shortcut>, and "
-"<shortcut>8</shortcut> allow for cardinal movement (down, left, right, and "
-"up). The keys <shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</"
-"shortcut>, and <shortcut>9</shortcut> allow for diagonal movement."
+"The numpad key <shortcut>5</shortcut> functions as a mouse click, toggled by "
+"<shortcut>/</shortcut> for middle click, <shortcut>*</shortcut> for right "
+"click and <shortcut>NumLock</shortcut> for left click. The keys <shortcut>2</"
+"shortcut>, <shortcut>4</shortcut>, <shortcut>6</shortcut>, and <shortcut>8</"
+"shortcut> allow for cardinal movement (down, left, right, and up). The keys "
+"<shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</shortcut>, and "
+"<shortcut>9</shortcut> allow for diagonal movement."
 msgstr ""
 "La touche du pavé numérique <shortcut>5</shortcut> fonctionne comme un clic "
-"de souris. Les touches <shortcut>2</shortcut>, <shortcut>4</shortcut>, "
-"<shortcut>6</shortcut> et <shortcut>8</shortcut> permettent un mouvement "
-"cardinal (Vers le bas, la gauche, la droite et le haut). Les touches "
-"<shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</shortcut> et "
-"<shortcut>9</shortcut> permettent un mouvement diagonal."
+"de souris, déclenchée par <shortcut>/</shortcut> pour le clic central, "
+"<shortcut>*</shortcut>pour le clic droit et <shortcut>Verr. Num.</shortcut> "
+"pour le clic gauche. Les touches <shortcut>2</shortcut>, <shortcut>4</"
+"shortcut>, <shortcut>6</shortcut> et <shortcut>8</shortcut> permettent un "
+"mouvement cardinal (Vers le bas, la gauche, la droite et le haut). Les "
+"touches <shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</"
+"shortcut> et <shortcut>9</shortcut> permettent un mouvement diagonal."
 
 #: ui/MouseNavigation.qml:39
 #, kde-format
@@ -1023,13 +1027,13 @@ msgctxt "@label Pointer magnification level"
 msgid "Magnification:"
 msgstr "Grossissement :"
 
-#: ui/ShakeCursor.qml:55
+#: ui/ShakeCursor.qml:56
 #, kde-format
 msgctxt "@label Normal pointer size"
 msgid "Normal"
 msgstr "Normal"
 
-#: ui/ShakeCursor.qml:62
+#: ui/ShakeCursor.qml:63
 #, kde-format
 msgctxt "@label Large pointer size"
 msgid "Large"
@@ -1077,32 +1081,32 @@ msgctxt "@item:inlistbox"
 msgid "Hide"
 msgstr "Masquer"
 
-#: ui/ZoomMagnifier.qml:123
+#: ui/ZoomMagnifier.qml:124
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Pointer tracking:"
 msgstr "Suivi du pointeur :"
 
-#: ui/ZoomMagnifier.qml:128
+#: ui/ZoomMagnifier.qml:129
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Proportional"
 msgstr "Proportionnel"
 
-#: ui/ZoomMagnifier.qml:129
+#: ui/ZoomMagnifier.qml:130
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Zoom area moves in sync with pointer"
 msgstr ""
 "La zone de zoom se déplace de façon coordonnée avec le pointeur de souris"
 
-#: ui/ZoomMagnifier.qml:133
+#: ui/ZoomMagnifier.qml:134
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Centered"
 msgstr "Centré"
 
-#: ui/ZoomMagnifier.qml:134
+#: ui/ZoomMagnifier.qml:135
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer stays centered on-screen, except near screen edges"
@@ -1110,13 +1114,13 @@ msgstr ""
 "Le pointeur de la souris reste au centre de l'écran, sauf près des bords de "
 "l'écran"
 
-#: ui/ZoomMagnifier.qml:138
+#: ui/ZoomMagnifier.qml:139
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Centered (Strict)"
 msgstr "Centré (Strict)"
 
-#: ui/ZoomMagnifier.qml:139
+#: ui/ZoomMagnifier.qml:140
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer stays centered on-screen, even near screen edges"
@@ -1124,56 +1128,62 @@ msgstr ""
 "Le pointeur de la souris reste au centre de l'écran, même près des bords de "
 "l'écran"
 
-#: ui/ZoomMagnifier.qml:143
+#: ui/ZoomMagnifier.qml:144
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Push"
 msgstr "Pousser"
 
-#: ui/ZoomMagnifier.qml:144
+#: ui/ZoomMagnifier.qml:145
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer pushes zoom area at screen edges"
 msgstr ""
 "Le pointeur de souris repousse la zone de zoom sur les bords de l'écran"
 
-#: ui/ZoomMagnifier.qml:148
+#: ui/ZoomMagnifier.qml:149
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: ui/ZoomMagnifier.qml:149
+#: ui/ZoomMagnifier.qml:150
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Zoom area doesn't follow pointer"
 msgstr "La zone de zoom ne suit pas le pointeur de souris"
 
-#: ui/ZoomMagnifier.qml:166
+#: ui/ZoomMagnifier.qml:167
+#, kde-format
+msgctxt "@option:check"
+msgid "Sharpen screen content while zoomed in"
+msgstr "Accentuer le contenu de l'écran lors d'un zoom avant"
+
+#: ui/ZoomMagnifier.qml:178
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable focus tracking"
 msgstr "Activer le suivi de focus"
 
-#: ui/ZoomMagnifier.qml:178
+#: ui/ZoomMagnifier.qml:190
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable text caret tracking"
 msgstr "Activer le suivi du pointeur d'insertion de texte"
 
-#: ui/ZoomMagnifier.qml:194
+#: ui/ZoomMagnifier.qml:206
 #, kde-format
 msgctxt "@option:check, enable magnify effect, following 'Zoom:'"
 msgid "Magnify region"
 msgstr "Faire un agrandissement d'une zone"
 
-#: ui/ZoomMagnifier.qml:221
+#: ui/ZoomMagnifier.qml:233
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Width:"
 msgstr "Largeur :"
 
-#: ui/ZoomMagnifier.qml:232 ui/ZoomMagnifier.qml:257
+#: ui/ZoomMagnifier.qml:244 ui/ZoomMagnifier.qml:269
 #, kde-format
 msgctxt "short for pixel(s)"
 msgid "%1 px"
@@ -1181,44 +1191,44 @@ msgid_plural "%1 px"
 msgstr[0] "%1 px"
 msgstr[1] "%1 px"
 
-#: ui/ZoomMagnifier.qml:233 ui/ZoomMagnifier.qml:258
+#: ui/ZoomMagnifier.qml:245 ui/ZoomMagnifier.qml:270
 #, kde-format
 msgctxt "short for pixel(s)"
 msgid "px"
 msgstr "px"
 
-#: ui/ZoomMagnifier.qml:246
+#: ui/ZoomMagnifier.qml:258
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Height:"
 msgstr "Hauteur :"
 
-#: ui/ZoomMagnifier.qml:275
+#: ui/ZoomMagnifier.qml:287
 #, kde-format
 msgctxt "@option:check, disable zoom/magnify effect"
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: ui/ZoomMagnifier.qml:288
+#: ui/ZoomMagnifier.qml:300
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Zoom factor:"
 msgstr "Facteur de zoom :"
 
-#: ui/ZoomMagnifier.qml:321
+#: ui/ZoomMagnifier.qml:333
 #, kde-format
 msgctxt "@label"
 msgid "Scroll gesture modifier keys:"
 msgstr "Touches de modification du geste de défilement :"
 
-#: ui/ZoomMagnifier.qml:359
+#: ui/ZoomMagnifier.qml:371
 #, kde-format
 msgctxt "@info:tooltip, indicates feature unavailable on X11"
 msgid "Zoom scroll gestures are only available on Wayland."
 msgstr ""
 "Les gestes de défilement pour le zoom ne sont disponibles que sous Wayland."
 
-#: ui/ZoomMagnifier.qml:365
+#: ui/ZoomMagnifier.qml:377
 #, kde-format
 msgctxt "@label Hint for scroll gestures"
 msgid "Scroll while modifier keys are pressed to zoom"
@@ -1226,7 +1236,7 @@ msgstr ""
 "Faire défiler lors d'un appui sur les touches de modifications pour faire un "
 "zoom."
 
-#: ui/ZoomMagnifier.qml:386
+#: ui/ZoomMagnifier.qml:398
 #, kde-format
 msgctxt "@label Hint for zoom/magnify effect usage"
 msgid "Use shortcuts to control zoom"

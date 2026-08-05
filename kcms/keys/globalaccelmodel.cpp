@@ -404,7 +404,7 @@ void GlobalAccelModel::addApplication(const QString &desktopFileName, const QStr
     });
 }
 
-void GlobalAccelModel::onShortcutChanged(const QString &uniqueName)
+void GlobalAccelModel::updateCommandName(const QString &uniqueName)
 {
     auto component = std::find_if(m_components.cbegin(), m_components.cend(), [&uniqueName](const Component &c) { return c.id == uniqueName; });
     if (component == m_components.cend()) {
@@ -468,5 +468,3 @@ void GlobalAccelModel::genericErrorOccured(const QString &description, const QDB
     }
     Q_EMIT this->errorOccured(i18n("Error while communicating with the global shortcuts service"));
 }
-
-#include "moc_globalaccelmodel.cpp"

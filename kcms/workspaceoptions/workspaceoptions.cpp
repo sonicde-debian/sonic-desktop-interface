@@ -7,6 +7,8 @@
 
 #include "workspaceoptions.h"
 
+#include <qqml.h>
+
 #include <KLocalizedString>
 #include <KPluginFactory>
 
@@ -100,5 +102,4 @@ void KCMWorkspaceOptions::requestReboot()
     QDBusConnection::sessionBus().asyncCall(msg);
 }
 
-#include "moc_workspaceoptions.cpp"
 #include "workspaceoptions.moc"

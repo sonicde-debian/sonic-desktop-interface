@@ -88,6 +88,7 @@ QString ButtonToButtonName(SDL_GameControllerButton button)
 SDL_hid_device_info getJoystickHidInfo(short vendor, short product, std::string path)
 {
     SDL_hid_device_info *info = SDL_hid_enumerate(vendor, product);
+
     SDL_hid_device_info *current = info;
 
     qCDebug(KCM_GAMECONTROLLER) << "Checking for hidapi with vendor: " << vendor << " and product: " << product;
@@ -396,5 +397,3 @@ void Device::onHatEvent(const SDL_JoyHatEvent &event)
 {
     Q_EMIT hatPositionChanged(event.hat);
 }
-
-#include "moc_device.cpp"

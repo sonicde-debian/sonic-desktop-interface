@@ -8,6 +8,7 @@
 
 #include "logging.h"
 #include "touchpadbackend.h"
+#include "touchpadmoduledata.h"
 #include <config-build-options.h>
 
 #include <KLocalizedContext>
@@ -21,7 +22,7 @@
 #include <QQuickItem>
 #include <QVBoxLayout>
 
-K_PLUGIN_CLASS_WITH_JSON(KCMTouchpad, "kcm_touchpad.json")
+K_PLUGIN_FACTORY_WITH_JSON(KCMTouchpadFactory, "kcm_touchpad.json", registerPlugin<KCMTouchpad>(); registerPlugin<TouchpadModuleData>();)
 
 extern "C" {
 Q_DECL_EXPORT void kcminit()
@@ -61,7 +62,7 @@ KCMTouchpad::KCMTouchpad(QObject *parent, const KPluginMetaData &data)
 
     m_view->rootContext()->setContextProperty("backend", m_backend);
 
-    QObject::connect(m_view, &QQuickWidget::statusChanged, [&](QQuickWidget::Status status) {
+    QObject::connect(m_view, &QQuickWidget::statusChanged, this, [&](QQuickWidget::Status status) {
         if (status == QQuickWidget::Ready) {
             connect(m_view->rootObject(), SIGNAL(changeSignal()), this, SLOT(onChange()));
         }
@@ -178,4 +179,3 @@ void KCMTouchpad::hideErrorMessage()
 }
 
 #include "kcm.moc"
-#include "moc_kcm.cpp"

@@ -68,6 +68,11 @@
 #include <KShell>
 #include <KStringHandler>
 #include <KUrlMimeData>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QJSEngine>
+#include <QQmlEngine>
+#include <QStandardPaths>
 
 #include <Plasma/Applet>
 #include <Plasma/Containment>
@@ -82,6 +87,71 @@
 using namespace std::chrono_literals;
 
 Q_LOGGING_CATEGORY(FOLDERMODEL, "plasma.containments.desktop.folder.foldermodel")
+
+// Small helper exposed to QML to check whether KRunner is installed/running.
+class KRunnerChecker : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(bool krunnerAvailable READ krunnerAvailable NOTIFY krunnerAvailableChanged)
+
+public:
+    explicit KRunnerChecker(QObject *parent = nullptr)
+        : QObject(parent)
+        , m_krunnerAvailable(false)
+    {
+        const QString serviceName = QStringLiteral("org.kde.krunner");
+        const QString serviceFile = QStringLiteral("dbus-1/services/org.kde.krunner.service");
+
+        bool isRunning = QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName);
+        bool isInstalled = !QStandardPaths::locate(QStandardPaths::GenericDataLocation, serviceFile).isEmpty();
+
+        m_krunnerAvailable = isRunning || isInstalled;
+
+        auto iface = QDBusConnection::sessionBus().interface();
+        connect(iface,
+                &QDBusConnectionInterface::serviceOwnerChanged,
+                this,
+                [this, serviceName, serviceFile](const QString &name, const QString & /*oldOwner*/, const QString &newOwner) {
+                    if (name == serviceName) {
+                        bool currentlyActive = !newOwner.isEmpty();
+                        bool stillAvailable = currentlyActive;
+
+                        // Fallback: If it stopped running, check if the service file still exists
+                        if (!stillAvailable) {
+                            stillAvailable = !QStandardPaths::locate(QStandardPaths::GenericDataLocation, serviceFile).isEmpty();
+                        }
+
+                        if (stillAvailable != m_krunnerAvailable) {
+                            m_krunnerAvailable = stillAvailable;
+                            Q_EMIT krunnerAvailableChanged();
+                        }
+                    }
+                });
+    }
+
+    bool krunnerAvailable() const
+    {
+        return m_krunnerAvailable;
+    }
+
+Q_SIGNALS:
+    void krunnerAvailableChanged();
+
+private:
+    bool m_krunnerAvailable;
+};
+
+static QObject *krunner_checker_provider(QQmlEngine *, QJSEngine *)
+{
+    return new KRunnerChecker();
+}
+
+static void registerKRunnerChecker()
+{
+    qmlRegisterSingletonType<KRunnerChecker>("org.kde.private.desktopcontainment.folder", 1, 0, "KRunnerChecker", krunner_checker_provider);
+}
+
+Q_COREAPP_STARTUP_FUNCTION(registerKRunnerChecker)
 
 class DragTrackerSingleton
 {
@@ -210,7 +280,7 @@ FolderModel::FolderModel(QObject *parent)
      * adding an entry in the map and it showing up in the model should be
      * small, this should rarely, if ever happen.
      */
-    m_dropTargetPositionsCleanup->setInterval(10s);
+    m_dropTargetPositionsCleanup->setInterval(1s);
     m_dropTargetPositionsCleanup->setSingleShot(true);
     connect(m_dropTargetPositionsCleanup, &QTimer::timeout, this, [this]() {
         if (!m_dropTargetPositions.isEmpty()) {
@@ -277,6 +347,10 @@ FolderModel::~FolderModel()
         // removeScreen is called
         m_screenMapper->disconnect(this);
         m_screenMapper->removeScreen(m_screen, m_currentActivity, resolvedUrl());
+    }
+
+    if (m_positioner) {
+        m_positioner->setFolderModel(nullptr);
     }
 }
 
@@ -803,6 +877,16 @@ void FolderModel::cd(int row)
     }
 }
 
+Positioner *FolderModel::positioner() const
+{
+    return m_positioner.data();
+}
+
+void FolderModel::setPositioner(Positioner *p)
+{
+    m_positioner = p;
+}
+
 void FolderModel::run(int row)
 {
     if (row < 0) {
@@ -895,21 +979,19 @@ void FolderModel::rename(int row, const QString &name)
 
     QModelIndex idx = index(row, 0);
     const QString filename = data(idx, UrlRole).toString();
-    Q_EMIT itemAboutToRename(filename);
-    m_dirModel->setData(mapToSource(idx), name, Qt::EditRole);
+    const QString newFilename = QStringLiteral("desktop:/%1").arg(name);
     connect(
-        m_dirModel,
-        &KDirModel::dataChanged,
+        this,
+        &QAbstractItemModel::dataChanged,
         this,
         [=, this](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles) {
-            Q_UNUSED(roles)
-            QString newFilename;
-            if (topLeft == bottomRight) {
-                newFilename = data(mapFromSource(topLeft), UrlRole).toString();
-            }
+            Q_UNUSED(roles);
+            Q_UNUSED(topLeft);
+            Q_UNUSED(bottomRight);
             Q_EMIT itemRenamed(filename, newFilename);
         },
         Qt::SingleShotConnection);
+    setData(idx, name, Qt::EditRole);
 }
 
 int FolderModel::fileExtensionBoundary(int row)
@@ -1241,10 +1323,9 @@ void FolderModel::drop(QQuickItem *target, QObject *dropEvent, int row, bool sho
         dropTargetUrl = item.mostLocalUrl();
     }
 
-    auto dropTargetFolderUrl = dropTargetUrl;
-    if (dropTargetFolderUrl.fileName() == QLatin1Char('.')) {
+    if (dropTargetUrl.fileName() == QLatin1Char('.')) {
         // the target URL for desktop:/ is e.g. 'file://home/user/Desktop/.'
-        dropTargetFolderUrl = dropTargetFolderUrl.adjusted(QUrl::RemoveFilename);
+        dropTargetUrl = dropTargetUrl.adjusted(QUrl::RemoveFilename | QUrl::StripTrailingSlash);
     }
 
     // use dropTargetUrl to resolve desktop:/ to the actual file location which is also used by the mime data
@@ -1252,15 +1333,16 @@ void FolderModel::drop(QQuickItem *target, QObject *dropEvent, int row, bool sho
      * use a fancy scheme like desktop:/ instead. Ensure we always use the latter to properly map URLs,
      * i.e. go from file:///home/user/Desktop/file to desktop:/file
      */
-    auto mappableUrl = [this, dropTargetFolderUrl](const QUrl &url) -> QUrl {
-        if (dropTargetFolderUrl != m_dirModel->dirLister()->url()) {
+    auto mappableUrl = [this, dropTargetUrl](const QUrl &url) -> QUrl {
+        if (dropTargetUrl != m_dirModel->dirLister()->url()) {
             QString mappedUrl = url.toString();
-            const auto local = dropTargetFolderUrl.toString();
-            const auto internal = m_dirModel->dirLister()->url().toString();
+            const auto local = dropTargetUrl.toString();
+            auto internal = m_dirModel->dirLister()->url();
             if (mappedUrl.startsWith(local)) {
-                mappedUrl.replace(0, local.size(), internal);
+                mappedUrl.replace(0, local.size(), QString());
             }
-            return ScreenMapper::stringToUrl(mappedUrl);
+            internal.setPath(mappedUrl);
+            return ScreenMapper::stringToUrl(internal.toString());
         }
         return url;
     };
@@ -1269,12 +1351,23 @@ void FolderModel::drop(QQuickItem *target, QObject *dropEvent, int row, bool sho
     const int y = dropEvent->property("y").toInt();
     const QPoint dropPos = {x, y};
 
+    qCDebug(FOLDERMODEL) << "drop: screen" << m_screen << "dragging()" << dragging() << "dragOwner"
+                         << (DragTracker::self()->dragOwner() ? DragTracker::self()->dragOwner()->m_url.toUtf8().constData() : "none") << "row" << row << "urls"
+                         << mimeData->urls() << "lock" << m_locked;
+
+    qCDebug(FOLDERMODEL) << "drop: screen" << m_screen << "dragging()" << dragging() << "dragOwner"
+                         << (DragTracker::self()->dragOwner() ? DragTracker::self()->dragOwner()->m_url.toUtf8().constData() : "none") << "lock" << m_locked
+                         << "m_urlChangedWhileDragging" << m_urlChangedWhileDragging << "mime urls" << mimeData->urls() << "row" << row << "idx" << idx;
+
     if (dragging() && row == -1 && !m_urlChangedWhileDragging) {
         if (m_locked || mimeData->urls().isEmpty()) {
+            qCDebug(FOLDERMODEL) << "drop: internal drag drop branch blocked by lock or empty urls";
             return;
         }
 
         setUnsortedModeOnDrop();
+        qCDebug(FOLDERMODEL) << "drop: internal drag drop accepted on screen" << m_screen << "processing" << mimeData->urls().count() << "urls"
+                             << mimeData->urls() << "dropPos" << dropPos;
 
         for (const auto &url : mimeData->urls()) {
             m_dropTargetPositions.insert(url.fileName(), dropPos);
@@ -1297,14 +1390,25 @@ void FolderModel::drop(QQuickItem *target, QObject *dropEvent, int row, bool sho
     }
 
     if (m_usedByContainment && !m_screenMapper->sharedDesktops()) {
-        if (isDropBetweenSharedViews(mimeData->urls(), dropTargetFolderUrl)) {
+        if (isDropBetweenSharedViews(mimeData->urls(), dropTargetUrl)) {
             setUnsortedModeOnDrop();
             const QList<QUrl> urls = mimeData->urls();
+            qCDebug(FOLDERMODEL) << "drop: isDropBetweenSharedViews on screen" << m_screen << "urls" << urls << "dropTargetUrl" << dropTargetUrl;
             for (const auto &url : urls) {
                 m_dropTargetPositions.insert(url.fileName(), dropPos);
-                m_screenMapper->addMapping(mappableUrl(url), m_screen, m_currentActivity, ScreenMapper::DelayedSignal);
-                m_screenMapper->removeItemFromDisabledScreen(mappableUrl(url));
+                const auto mappable = mappableUrl(url);
+                qCDebug(FOLDERMODEL) << "drop: adding mapping for" << mappable << "to screen" << m_screen;
+                m_screenMapper->addMapping(mappable, m_screen, m_currentActivity, ScreenMapper::DelayedSignal);
+                m_screenMapper->removeItemFromDisabledScreen(mappable);
             }
+            qCDebug(FOLDERMODEL) << "drop: cross-screen flush" << m_screen << "urls" << mimeData->urls();
+            m_screenMapper->flushDelayedSignal();
+            for (const auto &url : urls) {
+                if (m_positioner) {
+                    m_positioner->bootstrapUrl(mappableUrl(url));
+                }
+            }
+            Q_EMIT move(x, y, mimeData->urls());
             m_dropTargetPositionsCleanup->start();
             return;
         }
@@ -1370,20 +1474,29 @@ void FolderModel::drop(QQuickItem *target, QObject *dropEvent, int row, bool sho
             m_dropTargetPositions.insert(targetUrl.fileName(), dropPos);
             m_dropTargetPositionsCleanup->start();
 
+            qCDebug(FOLDERMODEL) << "drop: copyJob started for" << targetUrl << "on screen" << m_screen;
+
             if (m_usedByContainment && !m_screenMapper->sharedDesktops()) {
                 // assign a screen for the item before the copy is actually done, so
                 // filterAcceptsRow doesn't assign the default screen to it
                 QUrl url = resolvedUrl();
                 // if the folderview's folder is a standard path, just use the targetUrl for mapping
-                if (targetUrl.toString().startsWith(url.toString())) {
+                // note: resolvedUrl() may use the desktop:/ scheme while targetUrl is a file:// path,
+                // so convert it to a file path for a reliable comparison
+                const QString desktopPath = DesktopSchemeHelper::getFileUrl(url.toString());
+                qCDebug(FOLDERMODEL) << "drop: desktopPath" << desktopPath << "dropTargetUrl" << dropTargetUrl << "resolvedUrl" << url;
+                if (targetUrl.toString().startsWith(desktopPath)) {
+                    qCDebug(FOLDERMODEL) << "drop: adding mapping via desktopPath branch for" << targetUrl << "to screen" << m_screen;
                     m_screenMapper->addMapping(targetUrl, m_screen, m_currentActivity, ScreenMapper::DelayedSignal);
                 } else if (targetUrl.toString().startsWith(dropTargetUrl.toString())) {
                     // if the folderview's folder is a special path, like desktop:// , we need to convert
                     // the targetUrl file:// path to a desktop:/ path for mapping
                     auto destPath = dropTargetUrl.path();
                     auto filePath = targetUrl.path();
+                    qCDebug(FOLDERMODEL) << "drop: checking dropTarget branch destPath" << destPath << "filePath" << filePath;
                     if (filePath.startsWith(destPath)) {
                         url.setPath(filePath.remove(0, destPath.length()));
+                        qCDebug(FOLDERMODEL) << "drop: adding mapping via dropTarget branch for" << url << "to screen" << m_screen;
                         m_screenMapper->addMapping(url, m_screen, m_currentActivity, ScreenMapper::DelayedSignal);
                     }
                 }
@@ -2412,4 +2525,4 @@ bool FolderModel::isDeleteCommandShown()
     return cg.readEntry("ShowDeleteCommand", false);
 }
 
-#include "moc_foldermodel.cpp"
+#include "foldermodel.moc"

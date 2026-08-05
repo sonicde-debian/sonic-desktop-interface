@@ -11,6 +11,8 @@
 #include "inputdevice.h"
 #include "touchscreenmoduledata.h"
 
+#include <qqml.h>
+
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KPluginFactory>
@@ -126,5 +128,3 @@ DevicesModel *Touchscreen::touchscreensModel() const
 }
 
 #include "kcmtouchscreen.moc"
-
-#include "moc_kcmtouchscreen.cpp"

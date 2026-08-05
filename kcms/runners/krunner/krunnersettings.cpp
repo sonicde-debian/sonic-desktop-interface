@@ -12,6 +12,8 @@
 #include <KLocalizedString>
 #include <KPluginFactory>
 
+#include <qqml.h>
+
 #include <QDBusConnection>
 #include <QDBusMessage>
 
@@ -86,4 +88,3 @@ void KRunnerSettings::save()
 }
 
 #include "krunnersettings.moc"
-#include "moc_krunnersettings.cpp"

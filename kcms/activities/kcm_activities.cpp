@@ -8,6 +8,8 @@
 #include "kcm_activities.h"
 #include "activityconfig.h"
 
+#include <qqml.h>
+
 #include <KAuthorized>
 #include <KLocalizedString>
 #include <KPluginFactory>
@@ -96,5 +98,3 @@ void ActivitiesModule::handleArgument(const QString &argument)
 }
 
 #include "kcm_activities.moc"
-
-#include "moc_kcm_activities.cpp"

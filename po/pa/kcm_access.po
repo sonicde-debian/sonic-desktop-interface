@@ -2,28 +2,28 @@
 # Amanpreet Singh Alam <aalam@redhat.com>, 2004, 2005.
 # Amanpreet Singh Brar <amanpreetalam@yahoo.com>, 2005.
 # Amanpreet Singh Brar <aalam@redhat.com>, 2005.
-# SPDX-FileCopyrightText: 2007, 2008, 2021, 2024, 2025 A S Alam <aalam@users.sf.net>
+# SPDX-FileCopyrightText: 2007, 2008, 2021, 2024, 2025, 2026 A S Alam <aalam@users.sf.net>
 # Amanpreet Singh Alam <aalam@users.sf.net>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: kcmaccess\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-08 00:45+0000\n"
-"PO-Revision-Date: 2025-02-28 10:36-0600\n"
+"POT-Creation-Date: 2026-05-22 02:48+0000\n"
+"PO-Revision-Date: 2026-01-24 08:26-0600\n"
 "Last-Translator: A S Alam <aman@punlinux.org>\n"
 "Language-Team: pa\n"
 "Language: pa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.2\n"
+"X-Generator: Lokalize 25.12.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
 #: kcmaccess.cpp:127 kcmaccess.cpp:155
 #, kde-format
 msgid "KWin"
-msgstr ""
+msgstr "ਕੇ-ਵਿਨ"
 
 #: kcmaccess.cpp:130
 #, kde-format
@@ -38,32 +38,32 @@ msgstr ""
 #: kcmaccess.cpp:178
 #, kde-format
 msgid "Move Left"
-msgstr ""
+msgstr "ਖੱਬੇ ਭੇਜੋ"
 
 #: kcmaccess.cpp:185
 #, kde-format
 msgid "Move Right"
-msgstr ""
+msgstr "ਸੱਜੇ ਭੇਜੋ"
 
 #: kcmaccess.cpp:192
 #, kde-format
 msgid "Move Up"
-msgstr ""
+msgstr "ਉੱਤੇ ਭੇਜੋ"
 
 #: kcmaccess.cpp:199
 #, kde-format
 msgid "Move Down"
-msgstr ""
+msgstr "ਹੇਠਾਂ ਭੇਜੋ"
 
 #: kcmaccess.cpp:206
 #, kde-format
 msgid "Move Mouse to Focus"
-msgstr ""
+msgstr "ਫੋਕਸ ਲਈ ਮਾਊਸ ਨੂੰ ਹਿਲਾਓ"
 
 #: kcmaccess.cpp:213
 #, kde-format
 msgid "Move Mouse to Center"
-msgstr ""
+msgstr "ਸੈੰਟਰ ਲਈ ਮਾਊਸ ਨੂੰ ਹਿਲਾਓ"
 
 #: kcmaccess.cpp:256
 #, kde-format
@@ -91,7 +91,7 @@ msgstr "ਜੈਸਚਰ ਲਈ ਤਸਦੀਕ ਕਰਨ ਵਾਸਤੇ ਪੁ�
 #: kcmaccessibilityactivationgestures.kcfg:17
 #, kde-format
 msgid "Confirm access to the Keyboard"
-msgstr ""
+msgstr "ਕੀਬੋਰਡ ਲਈ ਪਹੁੰਚ ਵਾਸਤੇ ਤਸਦੀਕ"
 
 #. i18n: ectx: label, entry (AccessXTimeout), group (Keyboard)
 #: kcmaccessibilityactivationgestures.kcfg:21
@@ -103,7 +103,7 @@ msgstr ""
 #: kcmaccessibilityactivationgestures.kcfg:25
 #, kde-format
 msgid "Delay for timeout"
-msgstr ""
+msgstr "ਟਾਈਮ-ਆਉਟ ਲਈ ਦੇਰੀ"
 
 #. i18n: ectx: label, entry (AccessXBeep), group (Keyboard)
 #: kcmaccessibilityactivationgestures.kcfg:29
@@ -143,15 +143,13 @@ msgstr "ਘੰਟੀ ਵੱਜਣ ਸਮੇਂ ਸਿਸਟਮ ਰੰਗਾਂ �
 
 #. i18n: ectx: label, entry (VisibleBellColor), group (Bell)
 #: kcmaccessibilitybell.kcfg:28
-#, fuzzy, kde-format
-#| msgid "Color of the Visible Bell"
+#, kde-format
 msgid "Color of the Visual Bell"
 msgstr "ਦਿੱਖ ਘੰਟੀ ਦੇ ਰੰਗ"
 
 #. i18n: ectx: label, entry (VisibleBellPause), group (Bell)
 #: kcmaccessibilitybell.kcfg:32
-#, fuzzy, kde-format
-#| msgid "Duration of the Visible Bell"
+#, kde-format
 msgid "Duration of the Visual Bell"
 msgstr "ਦਿੱਖ ਘੰਟੀ ਦਾ ਅੰਤਰਾਲ"
 
@@ -630,7 +628,7 @@ msgctxt "@label Hint for invert effect enable button"
 msgid "Use shortcuts to toggle inverting display and window colors"
 msgstr ""
 
-#: ui/Invert.qml:49 ui/ZoomMagnifier.qml:376
+#: ui/Invert.qml:49 ui/ZoomMagnifier.qml:388
 #, fuzzy, kde-format
 #| msgid "Configure Notifications…"
 msgctxt "@action:button"
@@ -928,11 +926,13 @@ msgstr "ਸਮਰੱਥ"
 #, kde-kuit-format
 msgctxt "@info:tooltip"
 msgid ""
-"The numpad key <shortcut>5</shortcut> functions as a mouse click. The keys "
-"<shortcut>2</shortcut>, <shortcut>4</shortcut>, <shortcut>6</shortcut>, and "
-"<shortcut>8</shortcut> allow for cardinal movement (down, left, right, and "
-"up). The keys <shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</"
-"shortcut>, and <shortcut>9</shortcut> allow for diagonal movement."
+"The numpad key <shortcut>5</shortcut> functions as a mouse click, toggled by "
+"<shortcut>/</shortcut> for middle click, <shortcut>*</shortcut> for right "
+"click and <shortcut>NumLock</shortcut> for left click. The keys <shortcut>2</"
+"shortcut>, <shortcut>4</shortcut>, <shortcut>6</shortcut>, and <shortcut>8</"
+"shortcut> allow for cardinal movement (down, left, right, and up). The keys "
+"<shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</shortcut>, and "
+"<shortcut>9</shortcut> allow for diagonal movement."
 msgstr ""
 
 #: ui/MouseNavigation.qml:39
@@ -1051,7 +1051,7 @@ msgctxt "@label Pointer magnification level"
 msgid "Magnification:"
 msgstr "ਵੱਡਦਰਸ਼ਨ:"
 
-#: ui/ShakeCursor.qml:55
+#: ui/ShakeCursor.qml:56
 #, fuzzy, kde-format
 #| msgctxt "@label Normal cursor size"
 #| msgid "Normal"
@@ -1059,7 +1059,7 @@ msgctxt "@label Normal pointer size"
 msgid "Normal"
 msgstr "ਸਧਾਰਨ"
 
-#: ui/ShakeCursor.qml:62
+#: ui/ShakeCursor.qml:63
 #, fuzzy, kde-format
 #| msgctxt "@label Large cursor size"
 #| msgid "Large"
@@ -1113,7 +1113,7 @@ msgctxt "@item:inlistbox"
 msgid "Hide"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:123
+#: ui/ZoomMagnifier.qml:124
 #, fuzzy, kde-format
 #| msgctxt "@label:spinbox"
 #| msgid "Pointer acceleration:"
@@ -1121,92 +1121,98 @@ msgctxt "@label:listbox"
 msgid "Pointer tracking:"
 msgstr "ਪੁਆਇੰਟਰ ਐਕਸਰਲੇਸ਼ਨ:"
 
-#: ui/ZoomMagnifier.qml:128
+#: ui/ZoomMagnifier.qml:129
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Proportional"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:129
+#: ui/ZoomMagnifier.qml:130
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Zoom area moves in sync with pointer"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:133
+#: ui/ZoomMagnifier.qml:134
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Centered"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:134
+#: ui/ZoomMagnifier.qml:135
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer stays centered on-screen, except near screen edges"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:138
+#: ui/ZoomMagnifier.qml:139
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Centered (Strict)"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:139
+#: ui/ZoomMagnifier.qml:140
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer stays centered on-screen, even near screen edges"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:143
+#: ui/ZoomMagnifier.qml:144
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Push"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:144
+#: ui/ZoomMagnifier.qml:145
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer pushes zoom area at screen edges"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:148
+#: ui/ZoomMagnifier.qml:149
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Disabled"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:149
+#: ui/ZoomMagnifier.qml:150
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Zoom area doesn't follow pointer"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:166
+#: ui/ZoomMagnifier.qml:167
 #, kde-format
 msgctxt "@option:check"
-msgid "Enable focus tracking"
+msgid "Sharpen screen content while zoomed in"
 msgstr ""
 
 #: ui/ZoomMagnifier.qml:178
 #, kde-format
 msgctxt "@option:check"
+msgid "Enable focus tracking"
+msgstr ""
+
+#: ui/ZoomMagnifier.qml:190
+#, kde-format
+msgctxt "@option:check"
 msgid "Enable text caret tracking"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:194
+#: ui/ZoomMagnifier.qml:206
 #, fuzzy, kde-format
 #| msgid "Magnification"
 msgctxt "@option:check, enable magnify effect, following 'Zoom:'"
 msgid "Magnify region"
 msgstr "ਵੱਡਦਰਸ਼ਨ"
 
-#: ui/ZoomMagnifier.qml:221
+#: ui/ZoomMagnifier.qml:233
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Width:"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:232 ui/ZoomMagnifier.qml:257
+#: ui/ZoomMagnifier.qml:244 ui/ZoomMagnifier.qml:269
 #, kde-format
 msgctxt "short for pixel(s)"
 msgid "%1 px"
@@ -1214,50 +1220,50 @@ msgid_plural "%1 px"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ui/ZoomMagnifier.qml:233 ui/ZoomMagnifier.qml:258
+#: ui/ZoomMagnifier.qml:245 ui/ZoomMagnifier.qml:270
 #, kde-format
 msgctxt "short for pixel(s)"
 msgid "px"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:246
+#: ui/ZoomMagnifier.qml:258
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Height:"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:275
+#: ui/ZoomMagnifier.qml:287
 #, kde-format
 msgctxt "@option:check, disable zoom/magnify effect"
 msgid "Disabled"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:288
+#: ui/ZoomMagnifier.qml:300
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Zoom factor:"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:321
+#: ui/ZoomMagnifier.qml:333
 #, kde-format
 msgctxt "@label"
 msgid "Scroll gesture modifier keys:"
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:359
+#: ui/ZoomMagnifier.qml:371
 #, kde-format
 msgctxt "@info:tooltip, indicates feature unavailable on X11"
 msgid "Zoom scroll gestures are only available on Wayland."
 msgstr ""
 
-#: ui/ZoomMagnifier.qml:365
+#: ui/ZoomMagnifier.qml:377
 #, fuzzy, kde-format
 #| msgid "Ring system bell when modifier keys are used"
 msgctxt "@label Hint for scroll gestures"
 msgid "Scroll while modifier keys are pressed to zoom"
 msgstr "ਜਦੋਂ ਸੋਧਕ ਸਵਿੱਚਾਂ ਦਬਾਈਆਂ ਜਾਣ ਤਾਂ ਸਿਸਟਮ ਘੰਟੀ ਵਜਾਓ"
 
-#: ui/ZoomMagnifier.qml:386
+#: ui/ZoomMagnifier.qml:398
 #, kde-format
 msgctxt "@label Hint for zoom/magnify effect usage"
 msgid "Use shortcuts to control zoom"

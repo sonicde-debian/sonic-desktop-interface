@@ -28,7 +28,7 @@ Kicker.SubMenu {
     visible: false
     backgroundHints: Plasmoid.containmentDisplayHints & PlasmaCore.Types.ContainmentPrefersOpaqueBackground ? PlasmaCore.Dialog.SolidBackground : PlasmaCore.Dialog.StandardBackground
     location: PlasmaCore.Types.Floating
-    offset: Kirigami.Units.smallSpacing
+    offset: 0 // slightly overlap submenu to match QtWidgets menu behavior
     LayoutMirroring.enabled: dialogMirrored
 
     onWindowDeactivated: {
@@ -42,8 +42,11 @@ Kicker.SubMenu {
         height: implicitHeight
         width: Math.min(Math.max(Layout.minimumWidth, implicitWidth), Layout.maximumWidth)
 
+        hoverEnabled: !hoverBlock.enabled
         iconsEnabled: true
         LayoutMirroring.enabled: itemDialog.LayoutMirroring.enabled
+        // force tooltip for recent files - the path is relevant no matter the display setting
+        showDescriptionInTooltip: (funnelModel.sourceModel as Kicker.RecentUsageModel)?.shownItems === Kicker.RecentUsageModel.OnlyDocs
 
         dialog: itemDialog
 
@@ -67,9 +70,16 @@ Kicker.SubMenu {
             }
 
             onSourceModelChanged: {
+                hoverBlock.reset()
                 itemListView.currentIndex = -1;
                 itemListView.resetDelegateSizing();
             }
+        }
+
+        HoverBlocker {
+            id: hoverBlock
+            anchors.fill: parent
+            z: 10
         }
     }
 

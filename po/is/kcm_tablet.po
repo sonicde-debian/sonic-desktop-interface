@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-desktop\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-02 02:38+0000\n"
-"PO-Revision-Date: 2026-03-13 12:03+0000\n"
+"POT-Creation-Date: 2026-05-03 00:45+0000\n"
+"PO-Revision-Date: 2026-02-16 09:30+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -129,7 +129,7 @@ msgstr "Teygja og fylla"
 #, kde-format
 msgctxt "@item:inlistbox Keep aspect ratio and fit within the screen"
 msgid "Keep Aspect Ratio and Fit"
-msgstr "Halda myndhlutfalli og passa á skjá"
+msgstr "Halda stærðarhlutföllum og aðlögun að skjá"
 
 #: kcmtablet.cpp:166 ui/DisplayTab.qml:100
 #, kde-format
@@ -243,80 +243,80 @@ msgctxt ""
 msgid "Down:"
 msgstr "Niður:"
 
-#: ui/ActionDialog.qml:274
+#: ui/ActionDialog.qml:275
 #, kde-format
 msgctxt ""
 "@label:slider Speed for how often this dial/ring should emit key events"
 msgid "Speed:"
 msgstr "Hraði:"
 
-#: ui/ActionDialog.qml:289
+#: ui/ActionDialog.qml:290
 #, kde-format
 msgctxt "@action:inmenu Left mouse click"
 msgid "Left-click"
 msgstr "Vinstrismellur"
 
-#: ui/ActionDialog.qml:290
+#: ui/ActionDialog.qml:291
 #, kde-format
 msgctxt "@action:inmenu Middle mouse click"
 msgid "Middle-click"
 msgstr "Miðjusmellur"
 
-#: ui/ActionDialog.qml:291
+#: ui/ActionDialog.qml:292
 #, kde-format
 msgctxt "@action:inmenu Right mouse click"
 msgid "Right-click"
 msgstr "Hægrismellur"
 
-#: ui/ActionDialog.qml:318
+#: ui/ActionDialog.qml:319
 #, kde-format
 msgctxt "@option:check The ctrl modifier on the keyboard"
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: ui/ActionDialog.qml:325
+#: ui/ActionDialog.qml:326
 #, kde-format
 msgctxt "@option:check The alt modifier on the keyboard"
 msgid "Alt"
 msgstr "Alt"
 
-#: ui/ActionDialog.qml:332
+#: ui/ActionDialog.qml:333
 #, kde-format
 msgctxt "@option:check The meta modifier on the keyboard"
 msgid "Meta"
 msgstr "Meta"
 
-#: ui/ActionDialog.qml:339
+#: ui/ActionDialog.qml:340
 #, kde-format
 msgctxt "@option:check The shift modifier on the keyboard"
 msgid "Shift"
 msgstr "Shift"
 
-#: ui/ActionDialog.qml:355
+#: ui/ActionDialog.qml:356
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 1"
 msgstr "Hnappur 1"
 
-#: ui/ActionDialog.qml:356
+#: ui/ActionDialog.qml:357
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 2"
 msgstr "Hnappur 2"
 
-#: ui/ActionDialog.qml:357
+#: ui/ActionDialog.qml:358
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 3"
 msgstr "Hnappur 3"
 
-#: ui/ActionDialog.qml:366
+#: ui/ActionDialog.qml:367
 #, kde-format
 msgctxt "@info"
 msgid "Act like a scroll wheel on a mouse."
 msgstr "Virka eins og skrunhjól á mús."
 
-#: ui/ActionDialog.qml:375
+#: ui/ActionDialog.qml:376
 #, kde-format
 msgctxt "@info"
 msgid "This button is disabled and will not do anything."
@@ -516,7 +516,7 @@ msgctxt "@label for graphics tablet ring config, % is number of ring"
 msgid "Pad ring %1:"
 msgstr "Bakkahringur %1:"
 
-#: ui/PadTab.qml:60
+#: ui/PadTab.qml:61
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -524,13 +524,13 @@ msgctxt ""
 msgid "pad ring/dial %1"
 msgstr "bakkahringur/skífa %1:"
 
-#: ui/PadTab.qml:100
+#: ui/PadTab.qml:101
 #, kde-format
 msgctxt "@label for graphics tablet ring config, % is number of dial"
 msgid "Pad dial %1:"
 msgstr "Bakkaskífa %1:"
 
-#: ui/PadTab.qml:102
+#: ui/PadTab.qml:103
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -538,13 +538,13 @@ msgctxt ""
 msgid "pad dial %1"
 msgstr "bakkaskífa %1"
 
-#: ui/PadTab.qml:138
+#: ui/PadTab.qml:139
 #, kde-format
 msgctxt "@label for graphics tablet button config, % is number of button"
 msgid "Pad button %1:"
 msgstr "Bakkahnappur %1:"
 
-#: ui/PadTab.qml:141
+#: ui/PadTab.qml:142
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -614,37 +614,42 @@ msgstr ""
 "Ef penninn er færður til á borðinu færist bendillinn til samræmis, eins og "
 "mús"
 
-#: ui/StylusTab.qml:356
+#: ui/StylusTab.qml:302
+#, kde-format
+msgid "Sync with mouse cursor"
+msgstr "Samstilla við músarbendil"
+
+#: ui/StylusTab.qml:362
 #, kde-format
 msgctxt "@label prefix for pen pressure curve config"
 msgid "Pen Pressure:"
 msgstr "Pennaþrýstingur:"
 
-#: ui/StylusTab.qml:416
+#: ui/StylusTab.qml:422
 #, kde-format
 msgctxt "% of minimum pen pressure"
 msgid "%1%"
 msgstr "%1%"
 
-#: ui/StylusTab.qml:424
+#: ui/StylusTab.qml:430
 #, kde-format
 msgctxt "% of maximum pen pressure"
 msgid "%1%"
 msgstr "%1%"
 
-#: ui/StylusTab.qml:435
+#: ui/StylusTab.qml:441
 #, kde-format
 msgctxt "100% or maximum pen pressure"
 msgid "100%"
 msgstr "100%"
 
-#: ui/StylusTab.qml:443
+#: ui/StylusTab.qml:449
 #, kde-format
 msgctxt "0% or zero pen pressure"
 msgid "0%"
 msgstr "0%"
 
-#: ui/StylusTab.qml:447
+#: ui/StylusTab.qml:453
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -654,13 +659,13 @@ msgstr ""
 "Þessi kúrva stjórnar sambandinu á milli þrýstingsins á pennann og "
 "þrýstingsgildanna sem forritið fær send."
 
-#: ui/StylusTab.qml:452
+#: ui/StylusTab.qml:458
 #, kde-format
 msgctxt "Pen pressure range"
 msgid "Pressure Range:"
 msgstr "Þrýstingssvið:"
 
-#: ui/StylusTab.qml:479
+#: ui/StylusTab.qml:485
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -670,31 +675,31 @@ msgstr ""
 "Lokað er á þrýsting sem er yfir eða undir mörkunum og þetta verður virka "
 "þrýstingssviðið."
 
-#: ui/StylusTab.qml:490
+#: ui/StylusTab.qml:496
 #, kde-format
 msgctxt "@action:button Calibration in progress"
 msgid "Calibration in Progress"
 msgstr "Kvörðun í gangi"
 
-#: ui/StylusTab.qml:492
+#: ui/StylusTab.qml:498
 #, kde-format
 msgctxt "@action:button Calibrate the pen display"
 msgid "Calibrate"
 msgstr "Kvarða"
 
-#: ui/StylusTab.qml:495
+#: ui/StylusTab.qml:501
 #, kde-format
 msgctxt "@action:button Pen display doesn't support calibration"
 msgid "Calibration Not Supported"
 msgstr "Kvörðun ekki studd"
 
-#: ui/StylusTab.qml:536
+#: ui/StylusTab.qml:542
 #, kde-format
 msgctxt "@action:button"
 msgid "Reset Custom Calibration"
 msgstr "Endurstilla sérsniðna kvörðun"
 
-#: ui/StylusTab.qml:551
+#: ui/StylusTab.qml:557
 #, kde-format
 msgctxt "@info"
 msgid ""

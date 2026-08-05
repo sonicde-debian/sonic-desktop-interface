@@ -6,6 +6,8 @@ option(HAVE_XINPUT "X11 XInput" OFF)
 
 if (X11_Xinput_FOUND)
     set(HAVE_XINPUT ON)
+    message(STATUS "X11 XInput found - keyboard layout hotplugging support enabled")
+else()
     message(STATUS "X11 XInput is not found but required to keep layouts with keyboard hotplugging")
 endif()
 
@@ -25,6 +27,7 @@ set( kded_keyboard_SRCS
     flags.cpp
     xkb_rules.cpp
     layoutnames.cpp
+    ipc/KeyboardIpcServer.cpp
 )
 
 kconfig_add_kcfg_files(kded_keyboard_SRCS keyboardsettings.kcfgc GENERATE_MOC)
@@ -38,6 +41,7 @@ target_link_libraries(kded_keyboard
     Qt::Concurrent
     Qt::Widgets
     Qt::Xml
+    Qt::Network
     KF6::ConfigCore
     KF6::CoreAddons
     KF6::KCMUtils
@@ -55,7 +59,12 @@ target_link_libraries(kded_keyboard
     X11::xkbfile
     PkgConfig::XKBREGISTRY
  )
+target_include_directories(kded_keyboard PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/ipc
+    ${CMAKE_SOURCE_DIR}/applets/keyboardlayout/ipc
+)
 target_link_libraries(kded_keyboard Qt::GuiPrivate)
+target_link_libraries(kded_keyboard keyboardlayout_ipc_protocol)
 
 if (HAVE_XINPUT)
     target_link_libraries(kded_keyboard X11::Xi)
@@ -79,11 +88,17 @@ set( kcm_keyboard_PART_SRCS
     layoutsearchmodel.cpp
 )
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    set(_KCM_KEYBOARD_DEFAULT_SEVERITY "Debug")
+else()
+    set(_KCM_KEYBOARD_DEFAULT_SEVERITY "Warning")
+endif()
+
 ecm_qt_declare_logging_category(kcm_keyboard_PART_SRCS
     HEADER debug.h
     IDENTIFIER KCM_KEYBOARD
     CATEGORY_NAME org.kde.kcm_keyboard
-    DEFAULT_SEVERITY Warning
+    DEFAULT_SEVERITY ${_KCM_KEYBOARD_DEFAULT_SEVERITY}
     DESCRIPTION "KCM and KDED for keyboard layouts"
     EXPORT kcm_keyboard
 )
@@ -142,11 +157,13 @@ ecm_add_qml_module(kcm_keyboard_declarative
         keyboardmodel.cpp
         layoutmodel.cpp
         types.h
+        ${CMAKE_SOURCE_DIR}/messagelogger.cpp
     DEPENDENCIES
         QtCore
 )
 
 target_link_libraries(kcm_keyboard_declarative PRIVATE kcm_keyboard_static)
+target_link_libraries(kcm_keyboard_declarative PRIVATE Qt::Network)
 
 ecm_finalize_qml_module(kcm_keyboard_declarative)
 

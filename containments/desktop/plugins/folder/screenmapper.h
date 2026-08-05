@@ -56,6 +56,8 @@ public:
 
     void addScreenTransition(int screenSrc, int screenDst, const QString &activity);
 
+    void flushDelayedSignal();
+
     bool sharedDesktops() const
     {
         return m_sharedDesktops;
@@ -74,6 +76,7 @@ Q_SIGNALS:
 
 private:
     void processScreenTransition();
+    int firstAvailableScreenForItem(const QUrl &itemUrl, const QString &activity) const;
 
     /**
      * The format of DisabledScreensMap is:

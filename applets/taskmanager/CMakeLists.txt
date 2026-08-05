@@ -3,7 +3,6 @@ add_definitions(-DTRANSLATION_DOMAIN=\"plasma_applet_org.kde.plasma.taskmanager\
 plasma_add_applet(org.kde.plasma.taskmanager
     QML_SOURCES
         qml/AudioStream.qml
-        qml/Badge.qml
         qml/ConfigAppearance.qml
         qml/ConfigBehavior.qml
         qml/config.qml
@@ -29,6 +28,7 @@ plasma_add_applet(org.kde.plasma.taskmanager
         backend.cpp
         smartlauncherbackend.cpp
         smartlauncheritem.cpp
+        ${CMAKE_SOURCE_DIR}/messagelogger.cpp
     RESOURCES
         main.xml
     GENERATE_APPLET_CLASS

@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmaccess\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-08 00:45+0000\n"
-"PO-Revision-Date: 2026-03-13 11:16+0100\n"
-"Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
+"POT-Creation-Date: 2026-05-22 02:48+0000\n"
+"PO-Revision-Date: 2026-05-03 23:05+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -614,7 +614,7 @@ msgstr ""
 "Pomocí klávesových zkratek přepínejte mezi invertováním barev displeje a "
 "okna."
 
-#: ui/Invert.qml:49 ui/ZoomMagnifier.qml:376
+#: ui/Invert.qml:49 ui/ZoomMagnifier.qml:388
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Shortcuts…"
@@ -888,17 +888,22 @@ msgstr "Povolit"
 #, kde-kuit-format
 msgctxt "@info:tooltip"
 msgid ""
-"The numpad key <shortcut>5</shortcut> functions as a mouse click. The keys "
-"<shortcut>2</shortcut>, <shortcut>4</shortcut>, <shortcut>6</shortcut>, and "
-"<shortcut>8</shortcut> allow for cardinal movement (down, left, right, and "
-"up). The keys <shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</"
-"shortcut>, and <shortcut>9</shortcut> allow for diagonal movement."
+"The numpad key <shortcut>5</shortcut> functions as a mouse click, toggled by "
+"<shortcut>/</shortcut> for middle click, <shortcut>*</shortcut> for right "
+"click and <shortcut>NumLock</shortcut> for left click. The keys <shortcut>2</"
+"shortcut>, <shortcut>4</shortcut>, <shortcut>6</shortcut>, and <shortcut>8</"
+"shortcut> allow for cardinal movement (down, left, right, and up). The keys "
+"<shortcut>1</shortcut>, <shortcut>3</shortcut>, <shortcut>7</shortcut>, and "
+"<shortcut>9</shortcut> allow for diagonal movement."
 msgstr ""
 "Klávesa numerické klávesnice <shortcut>5</shortcut> funguje jako kliknutí "
-"myší. Klávesy <shortcut>2</shortcut>, <shortcut>4</shortcut>, <shortcut>6</"
-"shortcut> a <shortcut>8</shortcut> umožňují základní pohyb (dolů, doleva, "
-"doprava a nahoru). Klávesy <shortcut>1</shortcut>, <shortcut>3</shortcut>, "
-"<shortcut>7</shortcut> a <shortcut>9</shortcut> umožňují diagonální pohyb."
+"myší, zapnuté <shortcut>/</shortcut> pro kliknutí prostředním tlačítkem, "
+"<shortcut>*</shortcut> pro pravé kliknutí a <shortcut>NumLock</shortcut> pro "
+"levé kliknutí. Klávesy <shortcut>2</shortcut>, <shortcut>4</shortcut>, "
+"<shortcut>6</shortcut> a <shortcut>8</shortcut> umožňují základní pohyb "
+"(dolů, doleva, doprava a nahoru). Klávesy <shortcut>1</shortcut>, "
+"<shortcut>3</shortcut>, <shortcut>7</shortcut> a <shortcut>9</shortcut> "
+"umožňují diagonální pohyb."
 
 #: ui/MouseNavigation.qml:39
 #, kde-format
@@ -1009,13 +1014,13 @@ msgctxt "@label Pointer magnification level"
 msgid "Magnification:"
 msgstr "Zvětšení:"
 
-#: ui/ShakeCursor.qml:55
+#: ui/ShakeCursor.qml:56
 #, kde-format
 msgctxt "@label Normal pointer size"
 msgid "Normal"
 msgstr "Normální"
 
-#: ui/ShakeCursor.qml:62
+#: ui/ShakeCursor.qml:63
 #, kde-format
 msgctxt "@label Large pointer size"
 msgid "Large"
@@ -1063,43 +1068,43 @@ msgctxt "@item:inlistbox"
 msgid "Hide"
 msgstr "Skrýt"
 
-#: ui/ZoomMagnifier.qml:123
+#: ui/ZoomMagnifier.qml:124
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Pointer tracking:"
 msgstr "Sledování kurzoru:"
 
-#: ui/ZoomMagnifier.qml:128
+#: ui/ZoomMagnifier.qml:129
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Proportional"
 msgstr "Proporcionální"
 
-#: ui/ZoomMagnifier.qml:129
+#: ui/ZoomMagnifier.qml:130
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Zoom area moves in sync with pointer"
 msgstr "Oblast přiblížení se pohybuje společně s kurzorem"
 
-#: ui/ZoomMagnifier.qml:133
+#: ui/ZoomMagnifier.qml:134
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Centered"
 msgstr "Na střed"
 
-#: ui/ZoomMagnifier.qml:134
+#: ui/ZoomMagnifier.qml:135
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer stays centered on-screen, except near screen edges"
 msgstr "Kurzor zůstává ve středu obrazovky, s výjimkou okrajů obrazovky"
 
-#: ui/ZoomMagnifier.qml:138
+#: ui/ZoomMagnifier.qml:139
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Centered (Strict)"
 msgstr "Na střed (striktně)"
 
-#: ui/ZoomMagnifier.qml:139
+#: ui/ZoomMagnifier.qml:140
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer stays centered on-screen, even near screen edges"
@@ -1107,55 +1112,61 @@ msgstr ""
 "Kurzor zůstává ve středu obrazovky, i když se nachází blízko okrajů "
 "obrazovky."
 
-#: ui/ZoomMagnifier.qml:143
+#: ui/ZoomMagnifier.qml:144
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Push"
 msgstr "Posun"
 
-#: ui/ZoomMagnifier.qml:144
+#: ui/ZoomMagnifier.qml:145
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Pointer pushes zoom area at screen edges"
 msgstr "Kurzor posouvá oblast přiblížení na okrajích obrazovky"
 
-#: ui/ZoomMagnifier.qml:148
+#: ui/ZoomMagnifier.qml:149
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Disabled"
 msgstr "Zakázáno"
 
-#: ui/ZoomMagnifier.qml:149
+#: ui/ZoomMagnifier.qml:150
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Zoom area doesn't follow pointer"
 msgstr "Oblast přiblížení nesleduje kurzor"
 
-#: ui/ZoomMagnifier.qml:166
+#: ui/ZoomMagnifier.qml:167
+#, kde-format
+msgctxt "@option:check"
+msgid "Sharpen screen content while zoomed in"
+msgstr "Zostřit obsah obrazovky při přiblížení"
+
+#: ui/ZoomMagnifier.qml:178
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable focus tracking"
 msgstr "Povolit sledování zaměření"
 
-#: ui/ZoomMagnifier.qml:178
+#: ui/ZoomMagnifier.qml:190
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable text caret tracking"
 msgstr "Povolit sledování textového kurzoru"
 
-#: ui/ZoomMagnifier.qml:194
+#: ui/ZoomMagnifier.qml:206
 #, kde-format
 msgctxt "@option:check, enable magnify effect, following 'Zoom:'"
 msgid "Magnify region"
 msgstr "Zvětšit oblast"
 
-#: ui/ZoomMagnifier.qml:221
+#: ui/ZoomMagnifier.qml:233
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Width:"
 msgstr "Šířka:"
 
-#: ui/ZoomMagnifier.qml:232 ui/ZoomMagnifier.qml:257
+#: ui/ZoomMagnifier.qml:244 ui/ZoomMagnifier.qml:269
 #, kde-format
 msgctxt "short for pixel(s)"
 msgid "%1 px"
@@ -1164,43 +1175,43 @@ msgstr[0] "%1 px"
 msgstr[1] "%1 px"
 msgstr[2] "%1 px"
 
-#: ui/ZoomMagnifier.qml:233 ui/ZoomMagnifier.qml:258
+#: ui/ZoomMagnifier.qml:245 ui/ZoomMagnifier.qml:270
 #, kde-format
 msgctxt "short for pixel(s)"
 msgid "px"
 msgstr "px"
 
-#: ui/ZoomMagnifier.qml:246
+#: ui/ZoomMagnifier.qml:258
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Height:"
 msgstr "Výška:"
 
-#: ui/ZoomMagnifier.qml:275
+#: ui/ZoomMagnifier.qml:287
 #, kde-format
 msgctxt "@option:check, disable zoom/magnify effect"
 msgid "Disabled"
 msgstr "Zakázáno"
 
-#: ui/ZoomMagnifier.qml:288
+#: ui/ZoomMagnifier.qml:300
 #, kde-format
 msgctxt "@label:spinbox"
 msgid "Zoom factor:"
 msgstr "Faktor zvětšení:"
 
-#: ui/ZoomMagnifier.qml:321
+#: ui/ZoomMagnifier.qml:333
 #, kde-format
 msgctxt "@label"
 msgid "Scroll gesture modifier keys:"
 msgstr "Klávesy pro úpravu gest posouvání:"
 
-#: ui/ZoomMagnifier.qml:359
+#: ui/ZoomMagnifier.qml:371
 #, kde-format
 msgctxt "@info:tooltip, indicates feature unavailable on X11"
 msgid "Zoom scroll gestures are only available on Wayland."
 msgstr "Gesta pro přiblížení a oddálení jsou k dispozici pouze ve Waylandu."
 
-#: ui/ZoomMagnifier.qml:365
+#: ui/ZoomMagnifier.qml:377
 #, kde-format
 msgctxt "@label Hint for scroll gestures"
 msgid "Scroll while modifier keys are pressed to zoom"
@@ -1208,32 +1219,8 @@ msgstr ""
 "Posunem při stisknutých modifikačních klávesách můžete přiblížit nebo "
 "oddálit zobrazení."
 
-#: ui/ZoomMagnifier.qml:386
+#: ui/ZoomMagnifier.qml:398
 #, kde-format
 msgctxt "@label Hint for zoom/magnify effect usage"
 msgid "Use shortcuts to control zoom"
 msgstr "Použít zkratky pro ovládání přiblížení"
-
-#~ msgctxt "Enable visual bell"
-#~ msgid "Enable"
-#~ msgstr "Povolit"
-
-#~ msgctxt "Enable slow keys"
-#~ msgid "Enable"
-#~ msgstr "Povolit"
-
-#~ msgctxt "Bounce keys enable"
-#~ msgid "Enable"
-#~ msgstr "Povolit"
-
-#~ msgctxt "Bounce keys delay"
-#~ msgid "Delay:"
-#~ msgstr "Prodleva:"
-
-#~ msgctxt "@option check, Enable shake cursor effect"
-#~ msgid "Enable"
-#~ msgstr "Povolit"
-
-#~ msgctxt "@label:listbox"
-#~ msgid "Mouse pointer:"
-#~ msgstr "Ukazatel myši:"

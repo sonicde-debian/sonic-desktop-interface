@@ -8,9 +8,10 @@
 
 #include <Plasma/Applet>
 #include <QAbstractItemModel>
+#include <QPointer>
 #include <qqmlregistration.h>
 
-class FolderModel;
+#include "foldermodel.h"
 
 class QTimer;
 
@@ -63,6 +64,7 @@ public:
 
     Q_INVOKABLE bool isBlank(int row) const;
     Q_INVOKABLE int indexForUrl(const QUrl &url) const;
+    Q_INVOKABLE void bootstrapUrl(const QUrl &url);
 
     Q_INVOKABLE void setRangeSelected(int anchor, int to);
 
@@ -141,9 +143,9 @@ private Q_SLOTS:
     void sourceRowsMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow);
     void sourceRowsRemoved(const QModelIndex &parent, int first, int last);
     void sourceLayoutChanged(const QList<QPersistentModelIndex> &parents, QAbstractItemModel::LayoutChangeHint hint);
-    void onItemAboutToRename(const QString &filename);
     void onItemRenamed(const QString &filename, const QString &newFilename);
     void onListingCompleted();
+    void onScreenMappingChanged();
 
 private:
     void initMaps(int size = -1);
@@ -166,7 +168,7 @@ private:
     void maybeRestoreAndApplyChangedPositions(bool forceConvertAndSave);
 
     bool m_enabled;
-    FolderModel *m_folderModel;
+    QPointer<FolderModel> m_folderModel;
 
     int m_perStripe;
     int m_optimalStripes = 0;
@@ -184,13 +186,16 @@ private:
 
     QHash<int, int> m_proxyToSource;
     QHash<int, int> m_sourceToProxy;
+    int m_preLayoutRowCount = -1;
     bool m_beginInsertRowsCalled = false; // used to sync the amount of begin/endInsertRows calls
+    // Snapshot of URL -> proxy taken in sourceLayoutAboutToBeChanged so that
+    // sourceLayoutChanged can preserve user-applied mappings across a sort/layout
+    // change instead of clobbering them with a KDirModel-row-based identity rebuild.
+    QHash<QString, int> m_preLayoutUrlToProxy;
 
     QString m_resolution;
 
     Plasma::Applet *m_applet = nullptr;
-
-    std::optional<QPair<QString, GridPosition>> m_toRename;
 
     friend class PositionerTest;
 };

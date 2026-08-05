@@ -10,6 +10,8 @@
 #include "kcm.h"
 #include "fileexcludefilters.h"
 
+#include <qqml.h>
+
 #include <KFormat>
 #include <KLocalizedString>
 #include <KPluginFactory>
@@ -120,4 +122,3 @@ QString ServerConfigModule::prettyIndexFileSize()
 }
 
 #include "kcm.moc"
-#include "moc_kcm.cpp"

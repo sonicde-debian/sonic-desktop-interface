@@ -13,6 +13,8 @@
 #include <KLocalizedString>
 #include <KPluginFactory>
 
+#include <qqml.h>
+
 #include <QDir>
 #include <QProcess>
 #include <QSortFilterProxyModel>
@@ -263,4 +265,3 @@ void KCMSplashScreen::defaults()
 }
 
 #include "kcm.moc"
-#include "moc_kcm.cpp"

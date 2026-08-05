@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-desktop\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-02 02:38+0000\n"
+"POT-Creation-Date: 2026-05-03 00:45+0000\n"
 "PO-Revision-Date: 2026-01-31 21:30+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -242,80 +242,80 @@ msgctxt ""
 msgid "Down:"
 msgstr "கீழே:"
 
-#: ui/ActionDialog.qml:274
+#: ui/ActionDialog.qml:275
 #, kde-format
 msgctxt ""
 "@label:slider Speed for how often this dial/ring should emit key events"
 msgid "Speed:"
 msgstr "வேகம்:"
 
-#: ui/ActionDialog.qml:289
+#: ui/ActionDialog.qml:290
 #, kde-format
 msgctxt "@action:inmenu Left mouse click"
 msgid "Left-click"
 msgstr "இடது கிளிக்"
 
-#: ui/ActionDialog.qml:290
+#: ui/ActionDialog.qml:291
 #, kde-format
 msgctxt "@action:inmenu Middle mouse click"
 msgid "Middle-click"
 msgstr "நடு கிளிக்"
 
-#: ui/ActionDialog.qml:291
+#: ui/ActionDialog.qml:292
 #, kde-format
 msgctxt "@action:inmenu Right mouse click"
 msgid "Right-click"
 msgstr "வலது கிளிக்"
 
-#: ui/ActionDialog.qml:318
+#: ui/ActionDialog.qml:319
 #, kde-format
 msgctxt "@option:check The ctrl modifier on the keyboard"
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: ui/ActionDialog.qml:325
+#: ui/ActionDialog.qml:326
 #, kde-format
 msgctxt "@option:check The alt modifier on the keyboard"
 msgid "Alt"
 msgstr "Alt"
 
-#: ui/ActionDialog.qml:332
+#: ui/ActionDialog.qml:333
 #, kde-format
 msgctxt "@option:check The meta modifier on the keyboard"
 msgid "Meta"
 msgstr "Meta"
 
-#: ui/ActionDialog.qml:339
+#: ui/ActionDialog.qml:340
 #, kde-format
 msgctxt "@option:check The shift modifier on the keyboard"
 msgid "Shift"
 msgstr "Shift"
 
-#: ui/ActionDialog.qml:355
+#: ui/ActionDialog.qml:356
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 1"
 msgstr "பட்டன் 1"
 
-#: ui/ActionDialog.qml:356
+#: ui/ActionDialog.qml:357
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 2"
 msgstr "பட்டன் 2"
 
-#: ui/ActionDialog.qml:357
+#: ui/ActionDialog.qml:358
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 3"
 msgstr "பட்டன் 3"
 
-#: ui/ActionDialog.qml:366
+#: ui/ActionDialog.qml:367
 #, kde-format
 msgctxt "@info"
 msgid "Act like a scroll wheel on a mouse."
 msgstr "சுட்டியிலுள்ள உருள் சக்கரத்தைப் போல செயல்படும்."
 
-#: ui/ActionDialog.qml:375
+#: ui/ActionDialog.qml:376
 #, kde-format
 msgctxt "@info"
 msgid "This button is disabled and will not do anything."
@@ -513,7 +513,7 @@ msgctxt "@label for graphics tablet ring config, % is number of ring"
 msgid "Pad ring %1:"
 msgstr "வரைபலகை வளையம் %1:"
 
-#: ui/PadTab.qml:60
+#: ui/PadTab.qml:61
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -521,13 +521,13 @@ msgctxt ""
 msgid "pad ring/dial %1"
 msgstr "வரைபலகை வளையம்/திருகி %1:"
 
-#: ui/PadTab.qml:100
+#: ui/PadTab.qml:101
 #, kde-format
 msgctxt "@label for graphics tablet ring config, % is number of dial"
 msgid "Pad dial %1:"
 msgstr "வரைபலகை திருகி %1:"
 
-#: ui/PadTab.qml:102
+#: ui/PadTab.qml:103
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -535,13 +535,13 @@ msgctxt ""
 msgid "pad dial %1"
 msgstr "பலகை திருகி %1"
 
-#: ui/PadTab.qml:138
+#: ui/PadTab.qml:139
 #, kde-format
 msgctxt "@label for graphics tablet button config, % is number of button"
 msgid "Pad button %1:"
 msgstr "வரைபலகை பட்டன் %1:"
 
-#: ui/PadTab.qml:141
+#: ui/PadTab.qml:142
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -609,37 +609,42 @@ msgid ""
 "like a mouse"
 msgstr "இடஞ்சுட்டி அதன் தற்போதைய இருப்பிடத்தைப் பொறுத்து நகரும் (சாதாரண சுட்டியைப் போல)"
 
-#: ui/StylusTab.qml:356
+#: ui/StylusTab.qml:302
+#, kde-format
+msgid "Sync with mouse cursor"
+msgstr ""
+
+#: ui/StylusTab.qml:362
 #, kde-format
 msgctxt "@label prefix for pen pressure curve config"
 msgid "Pen Pressure:"
 msgstr "பேனா அழுத்தம்:"
 
-#: ui/StylusTab.qml:416
+#: ui/StylusTab.qml:422
 #, kde-format
 msgctxt "% of minimum pen pressure"
 msgid "%1%"
 msgstr "%1%"
 
-#: ui/StylusTab.qml:424
+#: ui/StylusTab.qml:430
 #, kde-format
 msgctxt "% of maximum pen pressure"
 msgid "%1%"
 msgstr "%1%"
 
-#: ui/StylusTab.qml:435
+#: ui/StylusTab.qml:441
 #, kde-format
 msgctxt "100% or maximum pen pressure"
 msgid "100%"
 msgstr "100%"
 
-#: ui/StylusTab.qml:443
+#: ui/StylusTab.qml:449
 #, kde-format
 msgctxt "0% or zero pen pressure"
 msgid "0%"
 msgstr "0%"
 
-#: ui/StylusTab.qml:447
+#: ui/StylusTab.qml:453
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -649,13 +654,13 @@ msgstr ""
 "பேனாமீத் நீங்கள் இடும் அழுத்தம், செயலிக்கு எவ்வாறு மாற்றி அனுப்பப்பட வேண்டுமென்பதை இது "
 "தீர்மானிக்கும்"
 
-#: ui/StylusTab.qml:452
+#: ui/StylusTab.qml:458
 #, kde-format
 msgctxt "Pen pressure range"
 msgid "Pressure Range:"
 msgstr "அழுத்த வீச்சு:"
 
-#: ui/StylusTab.qml:479
+#: ui/StylusTab.qml:485
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -665,31 +670,31 @@ msgstr ""
 "அமைக்கப்பட்டுள்ள வரம்பில் அடங்கா அழுத்தத்தின் விளைவு, வரம்பின் எல்லை மதிப்பிற்கான விளைவுபோல் "
 "இருக்கும். அதாவது இந்த வரம்பிற்குள் உள்ள அழுத்த மாறுபாடுகளே கணினியால் பொருட்படுத்தப்படும்."
 
-#: ui/StylusTab.qml:490
+#: ui/StylusTab.qml:496
 #, kde-format
 msgctxt "@action:button Calibration in progress"
 msgid "Calibration in Progress"
 msgstr "அளதிருத்தம் செயலிலுள்ளது"
 
-#: ui/StylusTab.qml:492
+#: ui/StylusTab.qml:498
 #, kde-format
 msgctxt "@action:button Calibrate the pen display"
 msgid "Calibrate"
 msgstr "அளவொப்புமை"
 
-#: ui/StylusTab.qml:495
+#: ui/StylusTab.qml:501
 #, kde-format
 msgctxt "@action:button Pen display doesn't support calibration"
 msgid "Calibration Not Supported"
 msgstr "அளதிருத்தம் ஆதரிக்கப்படவில்லை"
 
-#: ui/StylusTab.qml:536
+#: ui/StylusTab.qml:542
 #, kde-format
 msgctxt "@action:button"
 msgid "Reset Custom Calibration"
 msgstr "தனிப்பயன் அளதிருத்தத்தை செயல்நீக்கு"
 
-#: ui/StylusTab.qml:551
+#: ui/StylusTab.qml:557
 #, kde-format
 msgctxt "@info"
 msgid ""

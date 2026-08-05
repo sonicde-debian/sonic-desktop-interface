@@ -6,6 +6,7 @@
 
 #include "positioner.h"
 #include "foldermodel.h"
+#include "screenmapper.h"
 
 #include <cstdlib>
 #include <ranges>
@@ -43,6 +44,9 @@ Positioner::Positioner(QObject *parent)
 
 Positioner::~Positioner()
 {
+    if (m_folderModel) {
+        m_folderModel->setPositioner(nullptr);
+    }
     // Clear position hashes to release memory
     m_positions.clear();
     m_changedPositions.clear();
@@ -86,12 +90,14 @@ void Positioner::setFolderModel(QObject *folderModel)
 
         if (m_folderModel) {
             disconnectSignals(m_folderModel);
+            m_folderModel->setPositioner(nullptr);
         }
 
         m_folderModel = qobject_cast<FolderModel *>(folderModel);
 
         if (m_folderModel) {
             connectSignals(m_folderModel);
+            m_folderModel->setPositioner(this);
             if (m_enabled) {
                 initMaps();
             }
@@ -300,6 +306,36 @@ int Positioner::indexForUrl(const QUrl &url) const
     return m_sourceToProxy.value(sourceIndex, -1);
 }
 
+void Positioner::bootstrapUrl(const QUrl &url)
+{
+    if (!m_folderModel || !m_enabled) {
+        return;
+    }
+    const int rowCount = m_folderModel->rowCount();
+    int proxyRow = -1;
+    for (int i = 0; i < rowCount; ++i) {
+        if (m_folderModel->data(m_folderModel->index(i, 0), FolderModel::UrlRole).toUrl() == url) {
+            proxyRow = i;
+            break;
+        }
+    }
+    if (proxyRow < 0) {
+        return;
+    }
+    if (!m_proxyToSource.contains(proxyRow)) {
+        updateMaps(proxyRow, proxyRow);
+    }
+    if (!m_positions.contains(url.toString())) {
+        m_positions[url.toString()] = GridPosition{
+            .stripe = qMax(0, proxyRow / m_perStripe),
+            .pos = qMax(0, proxyRow % m_perStripe),
+        };
+    }
+    qDebug() << this << "diag bootstrapUrl" << url << "row" << proxyRow;
+    Q_EMIT dataChanged(this->index(proxyRow, 0), this->index(proxyRow, 0), {FolderModel::BlankRole, FolderModel::UrlRole});
+    savePositionsConfig();
+}
+
 void Positioner::setRangeSelected(int anchor, int to)
 {
     if (!m_folderModel) {
@@ -415,6 +451,8 @@ int Positioner::move(const QVariantList &moves, bool save)
         int to;
         int sourceRow;
     };
+
+    qDebug() << this << "diag move: start: m_sourceToProxy(before)=" << m_sourceToProxy << "m_proxyToSource(before)=" << m_proxyToSource;
 
     // Don't allow moves while listing.
     if (m_folderModel->status() == FolderModel::Listing) {
@@ -536,6 +574,8 @@ int Positioner::move(const QVariantList &moves, bool save)
         savePositionsConfig();
     }
 
+    qDebug() << this << "diag move: end: m_sourceToProxy(after)=" << m_sourceToProxy << "m_proxyToSource(after)=" << m_proxyToSource;
+
     return toIndices.constFirst();
 }
 
@@ -546,7 +586,6 @@ void Positioner::updatePositionsList(int perStripeForPositions)
             perStripeForPositions = m_perStripe;
 
         m_positionsHeader.emplace(PositionsHeader{.numStripes = 1 + ((rowCount() - 1) / m_perStripe), .perStripe = m_perStripe});
-        m_positions.clear();
 
         QHashIterator<int, int> it(m_proxyToSource);
 
@@ -594,6 +633,8 @@ void Positioner::sourceStatusChanged()
 
 void Positioner::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles)
 {
+    qDebug() << this << "diag sourceDataChanged: top=" << topLeft.row() << "bottom=" << bottomRight.row() << "roles=" << roles
+             << "m_sourceToProxy=" << m_sourceToProxy;
     if (m_enabled) {
         int start = topLeft.row();
         int end = bottomRight.row();
@@ -616,15 +657,24 @@ void Positioner::sourceModelAboutToBeReset()
 
 void Positioner::sourceModelReset()
 {
+    qDebug() << this << "diag sourceModelReset: m_sourceToProxy(before)=" << m_sourceToProxy;
     if (m_enabled) {
         initMaps();
     }
 
     endResetModel();
+
+    if (screenInUse()) {
+        m_positions.clear();
+        m_changedPositions.clear();
+        updatePositionsList();
+        qDebug() << this << "diag sourceModelReset: cleared and rebuilt" << m_positions.size();
+    }
 }
 
 void Positioner::sourceRowsAboutToBeInserted(const QModelIndex &parent, int start, int end)
 {
+    qDebug() << this << "diag srcRowsAboutToBeInserted: start=" << start << "end=" << end << "m_sourceToProxy(before)=" << m_sourceToProxy;
     if (m_enabled) {
         // Don't insert yet if we're waiting for listing to complete to apply
         // initial positions;
@@ -697,6 +747,7 @@ void Positioner::sourceRowsAboutToBeMoved(const QModelIndex &sourceParent,
 
 void Positioner::sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
 {
+    qDebug() << this << "diag srcRowsAboutToBeRemoved: first=" << first << "last=" << last << "m_sourceToProxy(before)=" << m_sourceToProxy;
     if (m_enabled) {
         int oldLast = lastRow();
 
@@ -747,13 +798,38 @@ void Positioner::sourceRowsAboutToBeRemoved(const QModelIndex &parent, int first
 
 void Positioner::sourceLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents, QAbstractItemModel::LayoutChangeHint hint)
 {
-    Q_UNUSED(parents)
+    qDebug() << this << "diag sourceLayoutAboutToBeChanged: hint=" << (int)hint << "parents.count=" << parents.count()
+             << "rowCount=" << (m_folderModel ? m_folderModel->rowCount() : 0) << "m_sourceToProxy=" << m_sourceToProxy;
+
+    m_preLayoutRowCount = m_folderModel ? m_folderModel->rowCount() : 0;
+
+    // Snapshot the current URL -> positioner-proxy mapping BEFORE the layout
+    // changes. This lets sourceLayoutChanged translate the user-applied
+    // mapping through file identity instead of raw KDirModel source rows,
+    // which would otherwise be lost when KDirModel reorders.
+    m_preLayoutUrlToProxy.clear();
+    if (m_folderModel) {
+        for (auto it = m_proxyToSource.cbegin(); it != m_proxyToSource.cend(); ++it) {
+            const int proxyRow = it.key();
+            const int kdirRow = it.value();
+            if (kdirRow < 0 || kdirRow >= m_preLayoutRowCount) {
+                continue;
+            }
+            const QUrl url = m_folderModel->data(m_folderModel->index(kdirRow, 0), FolderModel::UrlRole).toUrl();
+            if (url.isValid()) {
+                m_preLayoutUrlToProxy.insert(url.toString(), proxyRow);
+            }
+        }
+    }
+    qDebug() << this << "diag sourceLayoutAboutToBeChanged: m_preLayoutUrlToProxy=" << m_preLayoutUrlToProxy;
 
     Q_EMIT layoutAboutToBeChanged(QList<QPersistentModelIndex>(), hint);
 }
 
 void Positioner::sourceRowsInserted(const QModelIndex &parent, int first, int last)
 {
+    qDebug() << this << "diag sourceRowsInserted: first=" << first << "last=" << last << "m_sourceToProxy=" << m_sourceToProxy
+             << "m_proxyToSource=" << m_proxyToSource;
     Q_UNUSED(parent)
     Q_UNUSED(first)
     Q_UNUSED(last)
@@ -795,6 +871,7 @@ void Positioner::sourceRowsMoved(const QModelIndex &sourceParent, int sourceStar
 
 void Positioner::sourceRowsRemoved(const QModelIndex &parent, int first, int last)
 {
+    qDebug() << this << "diag sourceRowsRemoved: first=" << first << "last=" << last << "m_sourceToProxy=" << m_sourceToProxy;
     Q_UNUSED(parent)
     Q_UNUSED(first)
     Q_UNUSED(last)
@@ -821,30 +898,122 @@ void Positioner::sourceLayoutChanged(const QList<QPersistentModelIndex> &parents
 {
     Q_UNUSED(parents)
 
+    qDebug() << this << "diag sourceLayoutChanged: m_enabled=" << m_enabled << "sortMode=" << (m_folderModel ? m_folderModel->sortMode() : -1)
+             << "rowCount=" << (m_folderModel ? m_folderModel->rowCount() : 0) << "m_preLayoutRowCount=" << m_preLayoutRowCount
+             << "m_sourceToProxy.isEmpty=" << m_sourceToProxy.isEmpty() << "m_preLayoutUrlToProxy=" << m_preLayoutUrlToProxy
+             << "m_sourceToProxy(before)=" << m_sourceToProxy;
+
     // Only reinitialize maps when in sorted mode. In unsorted mode, we want to preserve
     // manual icon positions even after layout changes (e.g., after drag and drop).
     if (m_enabled && m_folderModel->sortMode() != -1) {
-        initMaps();
+        // Rebuild the positioner maps by translating user-applied proxy arrangements
+        // through file URLs rather than rebuilding from raw KDirModel source rows.
+        // This preserves manual moves/swaps (e.g. via tst_move/tst_proxyMapping) when
+        // a layout change (e.g. a sort, a delayed screenMappingChanged-driven filter
+        // re-evaluation) causes KDirModel to reorder its rows.
+        const int newRowCount = m_folderModel->rowCount();
+        qDebug() << this << "diag sourceLayoutChanged: rebuild-from-URL: newRowCount=" << newRowCount << "hadUserMapping=" << !m_preLayoutUrlToProxy.isEmpty();
+
+        m_proxyToSource.clear();
+        m_sourceToProxy.clear();
+
+        if (m_preLayoutUrlToProxy.isEmpty()) {
+            // No previous mapping to preserve (or no URLs were resolvable in the
+            // pre-layout snapshot) - rebuild as identity over the new KDirModel rows.
+            for (int i = 0; i < newRowCount; ++i) {
+                updateMaps(i, i);
+            }
+        } else {
+            // First pass: place items whose URL was in the pre-layout snapshot at
+            // their remembered proxy, so that user-applied moves/swaps survive.
+            QSet<int> usedProxies;
+            QHash<int, int> newProxyToSource;
+            QSet<QString> seenUrls;
+            for (int newRow = 0; newRow < newRowCount; ++newRow) {
+                const QUrl url = m_folderModel->data(m_folderModel->index(newRow, 0), FolderModel::UrlRole).toUrl();
+                const QString urlStr = url.toString();
+                if (urlStr.isEmpty() || seenUrls.contains(urlStr)) {
+                    continue;
+                }
+                seenUrls.insert(urlStr);
+                if (m_preLayoutUrlToProxy.contains(urlStr)) {
+                    const int rememberedProxy = m_preLayoutUrlToProxy.value(urlStr);
+                    newProxyToSource.insert(rememberedProxy, newRow);
+                    m_sourceToProxy.insert(newRow, rememberedProxy);
+                    usedProxies.insert(rememberedProxy);
+                }
+            }
+            // Second pass: items not in the snapshot (genuinely new items) get the
+            // first free proxy slot, in the order they appear in the new model.
+            int nextFreeProxy = 0;
+            for (int newRow = 0; newRow < newRowCount; ++newRow) {
+                if (m_sourceToProxy.contains(newRow)) {
+                    continue;
+                }
+                while (usedProxies.contains(nextFreeProxy)) {
+                    ++nextFreeProxy;
+                }
+                newProxyToSource.insert(nextFreeProxy, newRow);
+                m_sourceToProxy.insert(newRow, nextFreeProxy);
+                usedProxies.insert(nextFreeProxy);
+                ++nextFreeProxy;
+            }
+            m_proxyToSource = std::move(newProxyToSource);
+        }
     }
+
+    // The pre-layout snapshot has been consumed; clear it so a subsequent
+    // layoutAboutToBeChanged takes a fresh one.
+    m_preLayoutUrlToProxy.clear();
+
+    qDebug() << this << "diag sourceLayoutChanged: AFTER if-block: m_enabled=" << m_enabled << "sortMode=" << (m_folderModel ? m_folderModel->sortMode() : -1)
+             << "m_sourceToProxy(after)=" << m_sourceToProxy << "m_proxyToSource(after)=" << m_proxyToSource;
 
     Q_EMIT layoutChanged(QList<QPersistentModelIndex>(), hint);
 }
 
 void Positioner::initMaps(int size)
 {
+    // Comprehensive diagnostics: show caller, before/after maps, and verify
+    // whether the post-initMaps maps are what the test expects.
+    const QHash<int, int> sourceToProxyBefore = m_sourceToProxy;
+    const QHash<int, int> proxyToSourceBefore = m_proxyToSource;
+    const int rowCount = (size == -1 && m_folderModel) ? m_folderModel->rowCount() : size;
+
+    qDebug() << this << "diag initMaps: ENTER size=" << size << "rowCount=" << rowCount << "m_sourceToProxy(before)=" << sourceToProxyBefore
+             << "m_proxyToSource(before)=" << proxyToSourceBefore;
+
     m_proxyToSource.clear();
     m_sourceToProxy.clear();
+
+    qDebug() << this << "diag initMaps: AFTER clear: m_sourceToProxy=" << m_sourceToProxy << "m_proxyToSource=" << m_proxyToSource;
 
     if (size == -1) {
         size = m_folderModel->rowCount();
     }
 
     if (!size) {
+        qDebug() << this << "diag initMaps: EXIT size=0";
         return;
     }
 
     for (int i = 0; i < size; ++i) {
+        qDebug() << this << "diag initMaps: loop i=" << i << "about to call updateMaps(" << i << "," << i << ")";
         updateMaps(i, i);
+        qDebug() << this << "diag initMaps: loop i=" << i << "after updateMaps: m_sourceToProxy=" << m_sourceToProxy << "m_proxyToSource=" << m_proxyToSource;
+    }
+
+    // VERIFY: Compare the post-initMaps maps to the pre-initMaps maps.
+    // If they differ, initMaps() destroyed user-applied mappings (like the swap).
+    const bool mapsChanged = (sourceToProxyBefore != m_sourceToProxy);
+    qDebug() << this << "diag initMaps: EXIT size=" << size << "m_sourceToProxy(after)=" << m_sourceToProxy << "m_proxyToSource(after)=" << m_proxyToSource
+             << "mapsChanged=" << mapsChanged << "wasNonEmpty=" << !sourceToProxyBefore.isEmpty();
+
+    // VERIFY: If we were called with a non-identity pre-map (e.g., swap present),
+    // log whether the post-map preserves it. The test expects the swap to survive.
+    if (!sourceToProxyBefore.isEmpty() && sourceToProxyBefore != m_sourceToProxy) {
+        qDebug() << this << "diag initMaps: WARNING: destroyed user-applied mapping!"
+                 << "before=" << sourceToProxyBefore << "after=" << m_sourceToProxy;
     }
 }
 
@@ -1275,29 +1444,21 @@ void Positioner::maybeRestoreAndApplyChangedPositions(bool forceConvertAndSave)
     m_deferRestoreChangedPositions = false;
 }
 
-void Positioner::onItemAboutToRename(const QString &filename)
-{
-    // Store old item position
-    if (auto positionsIt = m_positions.constFind(filename); positionsIt != m_positions.constEnd()) {
-        m_toRename = {filename, positionsIt.value()};
-    }
-}
-
 void Positioner::onItemRenamed(const QString &filename, const QString &newFilename)
 {
     updatePositionsList();
-    // "m_toRename" has 3 items: filename, row, stripe-pos
-    if (m_toRename.has_value() && m_toRename->first == filename && filename != newFilename) {
+    if (filename != newFilename) {
         // Restore item position after rename
-        if (auto positionsIt = m_positions.find(newFilename); positionsIt != m_positions.end()) {
-            // Assign two items: row, stripe-pos
-            positionsIt->stripe = m_toRename->second.stripe;
-            positionsIt->pos = m_toRename->second.pos;
-            convertFolderModelData();
+        if (auto positionsIt = m_positions.find(filename); positionsIt != m_positions.end()) {
+            m_positions[newFilename] = {
+                .stripe = qMax(0, positionsIt->stripe),
+                .pos = qMax(0, positionsIt->pos),
+            };
         }
     }
-    m_toRename.reset();
+    m_positions.remove(filename);
     m_changedPositions[newFilename] = std::nullopt;
+    convertFolderModelData();
     savePositionsConfig();
 }
 
@@ -1307,6 +1468,53 @@ void Positioner::onItemRenamed(const QString &filename, const QString &newFilena
 void Positioner::onListingCompleted()
 {
     savePositionsConfig();
+}
+
+void Positioner::onScreenMappingChanged()
+{
+    if (!m_folderModel || !m_enabled) {
+        return;
+    }
+    QMetaObject::invokeMethod(
+        this,
+        [this]() {
+            if (!m_folderModel || !m_enabled) {
+                return;
+            }
+            ScreenMapper *mapper = ScreenMapper::instance();
+            const int myScreen = m_folderModel->screen();
+            const QString activity = m_folderModel->currentActivity();
+            const int rowCount = m_folderModel->rowCount();
+            QList<int> proxyRowsToRemove;
+            for (auto it = m_proxyToSource.cbegin(); it != m_proxyToSource.cend(); ++it) {
+                const int sourceRow = it.value();
+                if (sourceRow < 0 || sourceRow >= rowCount) {
+                    proxyRowsToRemove.append(it.key());
+                    continue;
+                }
+                const QUrl url = m_folderModel->data(m_folderModel->index(sourceRow, 0), FolderModel::UrlRole).toUrl();
+                if (!url.isValid()) {
+                    continue;
+                }
+                if (mapper->screenForItem(url, activity) != myScreen) {
+                    proxyRowsToRemove.append(it.key());
+                }
+            }
+            if (proxyRowsToRemove.isEmpty()) {
+                return;
+            }
+            std::sort(proxyRowsToRemove.begin(), proxyRowsToRemove.end(), std::greater<int>());
+            for (int proxyRow : std::as_const(proxyRowsToRemove)) {
+                const int sourceRow = m_proxyToSource.value(proxyRow, -1);
+                beginRemoveRows(QModelIndex(), proxyRow, proxyRow);
+                m_proxyToSource.remove(proxyRow);
+                if (sourceRow >= 0) {
+                    m_sourceToProxy.remove(sourceRow);
+                }
+                endRemoveRows();
+            }
+        },
+        Qt::QueuedConnection);
 }
 
 void Positioner::connectSignals(FolderModel *model)
@@ -1322,9 +1530,9 @@ void Positioner::connectSignals(FolderModel *model)
     connect(model, &QAbstractItemModel::layoutChanged, this, &Positioner::sourceLayoutChanged, Qt::UniqueConnection);
     connect(m_folderModel, &FolderModel::urlChanged, this, &Positioner::reset, Qt::UniqueConnection);
     connect(m_folderModel, &FolderModel::statusChanged, this, &Positioner::sourceStatusChanged, Qt::UniqueConnection);
-    connect(m_folderModel, &FolderModel::itemAboutToRename, this, &Positioner::onItemAboutToRename, Qt::UniqueConnection);
     connect(m_folderModel, &FolderModel::itemRenamed, this, &Positioner::onItemRenamed, Qt::UniqueConnection);
     connect(m_folderModel, &FolderModel::listingCompleted, this, &Positioner::onListingCompleted, Qt::UniqueConnection);
+    connect(ScreenMapper::instance(), &ScreenMapper::screenMappingChanged, this, &Positioner::onScreenMappingChanged, Qt::UniqueConnection);
 }
 
 void Positioner::disconnectSignals(FolderModel *model)
@@ -1340,9 +1548,7 @@ void Positioner::disconnectSignals(FolderModel *model)
     disconnect(model, &QAbstractItemModel::layoutChanged, this, &Positioner::sourceLayoutChanged);
     disconnect(m_folderModel, &FolderModel::urlChanged, this, &Positioner::reset);
     disconnect(m_folderModel, &FolderModel::statusChanged, this, &Positioner::sourceStatusChanged);
-    disconnect(m_folderModel, &FolderModel::itemAboutToRename, this, &Positioner::onItemAboutToRename);
     disconnect(m_folderModel, &FolderModel::itemRenamed, this, &Positioner::onItemRenamed);
     disconnect(m_folderModel, &FolderModel::listingCompleted, this, &Positioner::onListingCompleted);
+    disconnect(ScreenMapper::instance(), &ScreenMapper::screenMappingChanged, this, &Positioner::onScreenMappingChanged);
 }
-
-#include "moc_positioner.cpp"

@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-desktop\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-02 02:38+0000\n"
-"PO-Revision-Date: 2026-01-27 18:33+0300\n"
-"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"POT-Creation-Date: 2026-05-03 00:45+0000\n"
+"PO-Revision-Date: 2026-02-15 14:33+0200\n"
+"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #: inputsequence.cpp:191
 #, kde-format
@@ -245,80 +245,80 @@ msgctxt ""
 msgid "Down:"
 msgstr "Вниз:"
 
-#: ui/ActionDialog.qml:274
+#: ui/ActionDialog.qml:275
 #, kde-format
 msgctxt ""
 "@label:slider Speed for how often this dial/ring should emit key events"
 msgid "Speed:"
 msgstr "Скорость:"
 
-#: ui/ActionDialog.qml:289
+#: ui/ActionDialog.qml:290
 #, kde-format
 msgctxt "@action:inmenu Left mouse click"
 msgid "Left-click"
 msgstr "Щелчок левой кнопкой"
 
-#: ui/ActionDialog.qml:290
+#: ui/ActionDialog.qml:291
 #, kde-format
 msgctxt "@action:inmenu Middle mouse click"
 msgid "Middle-click"
 msgstr "Щелчок средней кнопкой"
 
-#: ui/ActionDialog.qml:291
+#: ui/ActionDialog.qml:292
 #, kde-format
 msgctxt "@action:inmenu Right mouse click"
 msgid "Right-click"
 msgstr "Щелчок правой кнопкой"
 
-#: ui/ActionDialog.qml:318
+#: ui/ActionDialog.qml:319
 #, kde-format
 msgctxt "@option:check The ctrl modifier on the keyboard"
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: ui/ActionDialog.qml:325
+#: ui/ActionDialog.qml:326
 #, kde-format
 msgctxt "@option:check The alt modifier on the keyboard"
 msgid "Alt"
 msgstr "Alt"
 
-#: ui/ActionDialog.qml:332
+#: ui/ActionDialog.qml:333
 #, kde-format
 msgctxt "@option:check The meta modifier on the keyboard"
 msgid "Meta"
 msgstr "Meta"
 
-#: ui/ActionDialog.qml:339
+#: ui/ActionDialog.qml:340
 #, kde-format
 msgctxt "@option:check The shift modifier on the keyboard"
 msgid "Shift"
 msgstr "Shift"
 
-#: ui/ActionDialog.qml:355
+#: ui/ActionDialog.qml:356
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 1"
 msgstr "Кнопка 1"
 
-#: ui/ActionDialog.qml:356
+#: ui/ActionDialog.qml:357
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 2"
 msgstr "Кнопка 2"
 
-#: ui/ActionDialog.qml:357
+#: ui/ActionDialog.qml:358
 #, kde-format
 msgctxt "@action:inmenu Stylus button"
 msgid "Button 3"
 msgstr "Кнопка 3"
 
-#: ui/ActionDialog.qml:366
+#: ui/ActionDialog.qml:367
 #, kde-format
 msgctxt "@info"
 msgid "Act like a scroll wheel on a mouse."
 msgstr "Эмулировать колесо прокрутки мыши."
 
-#: ui/ActionDialog.qml:375
+#: ui/ActionDialog.qml:376
 #, kde-format
 msgctxt "@info"
 msgid "This button is disabled and will not do anything."
@@ -519,7 +519,7 @@ msgctxt "@label for graphics tablet ring config, % is number of ring"
 msgid "Pad ring %1:"
 msgstr "Кольцо планшета %1:"
 
-#: ui/PadTab.qml:60
+#: ui/PadTab.qml:61
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -527,13 +527,13 @@ msgctxt ""
 msgid "pad ring/dial %1"
 msgstr "Кольцо / диск планшета : %1"
 
-#: ui/PadTab.qml:100
+#: ui/PadTab.qml:101
 #, kde-format
 msgctxt "@label for graphics tablet ring config, % is number of dial"
 msgid "Pad dial %1:"
 msgstr "Диск планшета %1:"
 
-#: ui/PadTab.qml:102
+#: ui/PadTab.qml:103
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -541,13 +541,13 @@ msgctxt ""
 msgid "pad dial %1"
 msgstr "диск планшета %1"
 
-#: ui/PadTab.qml:138
+#: ui/PadTab.qml:139
 #, kde-format
 msgctxt "@label for graphics tablet button config, % is number of button"
 msgid "Pad button %1:"
 msgstr "Кнопка устройства %1:"
 
-#: ui/PadTab.qml:141
+#: ui/PadTab.qml:142
 #, kde-format
 msgctxt ""
 "@info Meant to be inserted into an existing sentence like 'configuring pad "
@@ -618,37 +618,42 @@ msgstr ""
 "Перемещение пера по поверхности приводит к относительному перемещению "
 "курсора, наподобие мыши"
 
-#: ui/StylusTab.qml:356
+#: ui/StylusTab.qml:302
+#, kde-format
+msgid "Sync with mouse cursor"
+msgstr "Синхронизация с курсором мыши"
+
+#: ui/StylusTab.qml:362
 #, kde-format
 msgctxt "@label prefix for pen pressure curve config"
 msgid "Pen Pressure:"
 msgstr "Нажим пером:"
 
-#: ui/StylusTab.qml:416
+#: ui/StylusTab.qml:422
 #, kde-format
 msgctxt "% of minimum pen pressure"
 msgid "%1%"
 msgstr "%1%"
 
-#: ui/StylusTab.qml:424
+#: ui/StylusTab.qml:430
 #, kde-format
 msgctxt "% of maximum pen pressure"
 msgid "%1%"
 msgstr "%1%"
 
-#: ui/StylusTab.qml:435
+#: ui/StylusTab.qml:441
 #, kde-format
 msgctxt "100% or maximum pen pressure"
 msgid "100%"
 msgstr "100%"
 
-#: ui/StylusTab.qml:443
+#: ui/StylusTab.qml:449
 #, kde-format
 msgctxt "0% or zero pen pressure"
 msgid "0%"
 msgstr "0%"
 
-#: ui/StylusTab.qml:447
+#: ui/StylusTab.qml:453
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -658,13 +663,13 @@ msgstr ""
 "Эта кривая позволяет настроить соотношения между силой нажима на перо и "
 "значением, которое будет передано в приложение."
 
-#: ui/StylusTab.qml:452
+#: ui/StylusTab.qml:458
 #, kde-format
 msgctxt "Pen pressure range"
 msgid "Pressure Range:"
 msgstr "Диапазон нажима:"
 
-#: ui/StylusTab.qml:479
+#: ui/StylusTab.qml:485
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -672,31 +677,31 @@ msgid ""
 "new effective range."
 msgstr "Сила нажатия выше или ниже порогового значения будет ограничена."
 
-#: ui/StylusTab.qml:490
+#: ui/StylusTab.qml:496
 #, kde-format
 msgctxt "@action:button Calibration in progress"
 msgid "Calibration in Progress"
 msgstr "Выполняется калибровка"
 
-#: ui/StylusTab.qml:492
+#: ui/StylusTab.qml:498
 #, kde-format
 msgctxt "@action:button Calibrate the pen display"
 msgid "Calibrate"
 msgstr "Калибровать"
 
-#: ui/StylusTab.qml:495
+#: ui/StylusTab.qml:501
 #, kde-format
 msgctxt "@action:button Pen display doesn't support calibration"
 msgid "Calibration Not Supported"
 msgstr "Калибровка не поддерживается"
 
-#: ui/StylusTab.qml:536
+#: ui/StylusTab.qml:542
 #, kde-format
 msgctxt "@action:button"
 msgid "Reset Custom Calibration"
 msgstr "Сбросить пользовательские параметры калибровки"
 
-#: ui/StylusTab.qml:551
+#: ui/StylusTab.qml:557
 #, kde-format
 msgctxt "@info"
 msgid ""

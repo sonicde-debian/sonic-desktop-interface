@@ -7,25 +7,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kaccess\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2013-09-08 07:05+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"POT-Creation-Date: 2026-05-09 00:45+0000\n"
+"PO-Revision-Date: 2026-02-01 17:56-0500\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr "ئابدۇقادىر ئابلىز، غەيرەت كەنجى"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
+msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 
 #: kaccess.cpp:65
 msgid ""
@@ -37,7 +38,7 @@ msgstr ""
 
 #: kaccess.cpp:66
 msgid "The Shift key is now active."
-msgstr "ھازىر Shift كۇنۇپكىسى ئاكتىپ"
+msgstr "ھازىر Shift كۇنۇپكىسى ئاكتىپ."
 
 #: kaccess.cpp:67
 msgid "The Shift key is now inactive."
@@ -182,14 +183,13 @@ msgstr "ھازىر Scroll Lock كۇنۇپكىسى پاسسىپ."
 #: kaccess.cpp:144
 #, kde-format
 msgid "Toggle Screen Reader On and Off"
-msgstr ""
+msgstr "ئېكران ئوقۇغۇچنى ئاچ ياكى تاقا"
 
 #: kaccess.cpp:146
-#, fuzzy, kde-format
-#| msgid "KDE Accessibility Tool"
+#, kde-format
 msgctxt "Name for kaccess shortcuts category"
 msgid "Accessibility"
-msgstr "ك د ئې(KDE) ياردەمچى ئىقتىدار قوراللىرى"
+msgstr "ياردەم ئىقتىدارى"
 
 #: kaccess.cpp:538
 #, kde-format
@@ -234,12 +234,12 @@ msgstr "مەزكۇر جەزملەش كۆزنىكىنى كۆرسەت"
 #: kaccess.cpp:597
 #, kde-format
 msgid "Deactivate All AccessX Features & Gestures"
-msgstr "بارلىق AccessX ئىقتىدارى ۋە قول ئىشارىسىنى ئاكتىپسىزلا"
+msgstr "بارلىق AccessX ئىقتىدارى ۋە قول ئىشارىتىنى ئاكتىپسىزلا"
 
 #: kaccess.cpp:640 kaccess.cpp:642
 #, kde-format
 msgid "Slow keys"
-msgstr "ئاستا كۇنۇپكىلار"
+msgstr "ئاستا كۇنۇپكا"
 
 #: kaccess.cpp:645 kaccess.cpp:647
 #, kde-format
@@ -249,12 +249,12 @@ msgstr "قاڭقىش كۇنۇپكىسى"
 #: kaccess.cpp:650 kaccess.cpp:652
 #, kde-format
 msgid "Sticky keys"
-msgstr "يېپىشقاق كۇنۇپكىلار"
+msgstr "يېپىشقاق كۇنۇپكا"
 
 #: kaccess.cpp:655 kaccess.cpp:657
 #, kde-format
 msgid "Mouse keys"
-msgstr "چاشقىنەك كۇنۇپكىلىرى"
+msgstr "چاشقىنەك كۇنۇپكىسى"
 
 #: kaccess.cpp:664
 #, kde-format
@@ -337,7 +337,7 @@ msgstr "راستلا «%1» ، «%2» ، «%3» ۋە «%4» نى ئاكتىپل�
 #: kaccess.cpp:749
 #, kde-format
 msgid "An application has requested to change this setting."
-msgstr "بىر پروگرامما بۇ تەڭشەكنى ئۆزگەرتىشنى ئىلتىماس قىلدى."
+msgstr "بىر پىروگرامما بۇ تەڭشەكنى ئۆزگەرتىشنى ئىلتىماس قىلدى."
 
 #: kaccess.cpp:753
 #, kde-format
@@ -345,7 +345,7 @@ msgid ""
 "You held down the Shift key for 8 seconds or an application has requested to "
 "change this setting."
 msgstr ""
-"Shift 8 سېكۇنت بېسىپ تۇردىڭىز ياكى پروگرامما بۇ تەڭشەكنى ئۆزگەرتىشنى "
+"Shift 8 سېكۇنت بېسىپ تۇردىڭىز ياكى پىروگرامما بۇ تەڭشەكنى ئۆزگەرتىشنى "
 "ئىلتىماس قىلدى."
 
 #: kaccess.cpp:755
@@ -354,14 +354,15 @@ msgid ""
 "You pressed the Shift key 5 consecutive times or an application has "
 "requested to change this setting."
 msgstr ""
-"سىز Shift كۇنۇپكىسىنى ئارقىمۇئارقا 5 قېتىم باستىڭىز ياكى پروگرامما بۇ "
+"سىز Shift كۇنۇپكىسىنى ئارقىمۇئارقا 5 قېتىم باستىڭىز ياكى پىروگرامما بۇ "
 "تەڭشەكنى ئۆزگەرتىشنى ئىلتىماس قىلدى."
 
 #: kaccess.cpp:759
 #, kde-format
 msgid "You pressed %1 or an application has requested to change this setting."
 msgstr ""
-"سىز %1 نى باستىڭىز ياكى بىر پروگرامما بۇ تەڭشەكنى ئۆزگەرتىشنى ئىلتىماس قىلدى."
+"سىز %1 نى باستىڭىز ياكى بىر پىروگرامما بۇ تەڭشەكنى ئۆزگەرتىشنى ئىلتىماس "
+"قىلدى."
 
 #: kaccess.cpp:764
 #, kde-format
@@ -369,13 +370,13 @@ msgid ""
 "An application has requested to change these settings, or you used a "
 "combination of several keyboard gestures."
 msgstr ""
-"بىر پروگرامما بۇ تەڭشەكلەرنى ئۆزگەرتىشنى ئىلتىماس قىلدى ياكى سىز بىرىكمە "
+"بىر پىروگرامما بۇ تەڭشەكلەرنى ئۆزگەرتىشنى ئىلتىماس قىلدى ياكى سىز بىرىكمە "
 "كۇنۇپكا ئىشلەتتىڭىز."
 
 #: kaccess.cpp:766
 #, kde-format
 msgid "An application has requested to change these settings."
-msgstr "بىر پروگرامما بۇ تەڭشەكلەرنى ئۆزگەرتىشنى ئىلتىماس قىلدى."
+msgstr "بىر پىروگرامما بۇ تەڭشەكلەرنى ئۆزگەرتىشنى ئىلتىماس قىلدى."
 
 #: kaccess.cpp:771
 #, kde-format
@@ -387,6 +388,12 @@ msgid ""
 "If you do not need them, you can select \"Deactivate all AccessX features "
 "and gestures\"."
 msgstr ""
+"چاشقىنەك ئىشلىتىشتە قىيىنچىلىقى بار بەزى ئىشلەتكۈچىلەر AccessX تەڭشىكىگە "
+"ئېھتىياجلىق، KDE سىستېما تەڭشىكىدىن سەپلىيەلەيسىز. ئۆلچەملىك ھەرپتاختا قول "
+"ئىشارىتى ئارقىلىق بۇ تاللانمىلارنى ئېچىپ ياكى تاقىيالايسىز.\n"
+"\n"
+"ئەگەر بۇ ئىقتىدارلارغا ئېھتىياجلىق بولمىسىڭىز، «بارلىق AccessX ئىقتىدارى ۋە "
+"قول ئىشارىتىنى چەكلە» نى تاللىسىڭىز بولىدۇ."
 
 #: kaccess.cpp:792
 #, kde-format
@@ -444,26 +451,25 @@ msgstr ""
 msgid "Mouse keys has been disabled."
 msgstr "چاشقىنەك كۇنۇپكىلىرى ئىناۋەتسىز قىلىنغان."
 
-#: main.cpp:41
-#, fuzzy, kde-format
-#| msgid "KDE Accessibility Tool"
+#: main.cpp:40
+#, kde-format
 msgid "Accessibility"
-msgstr "ك د ئې(KDE) ياردەمچى ئىقتىدار قوراللىرى"
+msgstr "ياردەم ئىقتىدارى"
 
-#: main.cpp:45
+#: main.cpp:44
 #, kde-format
 msgid "(c) 2000, Matthias Hoelzer-Kluepfel"
 msgstr "(c) 2000، Matthias Hoelzer-Kluepfel"
 
-#: main.cpp:47
+#: main.cpp:46
 #, kde-format
 msgid "Matthias Hoelzer-Kluepfel"
 msgstr "Matthias Hoelzer-Kluepfel"
 
-#: main.cpp:47
+#: main.cpp:46
 #, kde-format
 msgid "Author"
-msgstr "ئاپتور"
+msgstr "يازغۇچى"
 
 #~ msgid "KDE Accessibility Tool"
 #~ msgstr "ك د ئې(KDE) ياردەمچى ئىقتىدار قوراللىرى"
@@ -471,32 +477,26 @@ msgstr "ئاپتور"
 #~ msgid "kaccess"
 #~ msgstr "kaccess"
 
-#, fuzzy
 #~| msgid "Sticky keys"
 #~ msgid "Sticky Keys"
 #~ msgstr "يېپىشقاق كۇنۇپكىلار"
 
-#, fuzzy
 #~| msgid "Sticky keys"
 #~ msgid "Use &sticky keys"
 #~ msgstr "يېپىشقاق كۇنۇپكىلار"
 
-#, fuzzy
 #~| msgid "Sticky keys"
 #~ msgid "&Lock sticky keys"
 #~ msgstr "يېپىشقاق كۇنۇپكىلار"
 
-#, fuzzy
 #~| msgid "Slow keys"
 #~ msgid "&Use slow keys"
 #~ msgstr "ئاستا كۇنۇپكىلار"
 
-#, fuzzy
 #~| msgid "Bounce keys"
 #~ msgid "Bounce Keys"
 #~ msgstr "قاڭقىش كۇنۇپكىسى"
 
-#, fuzzy
 #~| msgid "Bounce keys"
 #~ msgid "Use bou&nce keys"
 #~ msgstr "قاڭقىش كۇنۇپكىسى"

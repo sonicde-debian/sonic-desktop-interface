@@ -9,30 +9,58 @@ import QtQuick
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
-import org.kde.plasma.workspace.components
 import org.kde.plasma.private.kcm_keyboard as KCMKeyboard
+import org.kde.plasma.keyboardlayout.ipc as KCMKeyboardIPC
 import org.kde.kirigami as Kirigami
 
 PlasmoidItem {
     id: root
 
-    signal layoutSelected(int layoutIndex)
-
     preferredRepresentation: fullRepresentation
     toolTipMainText: Plasmoid.title
-    toolTipSubText: "" // proper subtext is set by fullRepresentation
 
     readonly property bool inEmbeddedContainment: Plasmoid.containment.containmentType === PlasmaCore.Containment.CustomEmbedded
 
-    fullRepresentation: KeyboardLayoutSwitcher {
-        id: switcher
+    // The list of right-click menu actions, one per layout.
+    property var layoutActions: []
 
-        hoverEnabled: true
-        Plasmoid.status: hasMultipleKeyboardLayouts ? PlasmaCore.Types.ActiveStatus : root.inEmbeddedContainment ? PlasmaCore.Types.HiddenStatus : PlasmaCore.Types.PassiveStatus
+    Plasmoid.contextualActions: root.layoutActions
 
-        Binding {
-            root.toolTipSubText: switcher.layoutNames.longName
+    Plasmoid.onActivated: KCMKeyboardIPC.KeyboardLayoutSocket.switchToNextLayout()
+
+    Plasmoid.status:
+        KCMKeyboardIPC.KeyboardLayoutSocket.hasMultipleLayouts
+            ? PlasmaCore.Types.ActiveStatus
+            : root.inEmbeddedContainment
+                ? PlasmaCore.Types.HiddenStatus
+                : PlasmaCore.Types.PassiveStatus
+
+    toolTipSubText:
+        KCMKeyboardIPC.KeyboardLayoutSocket.layoutsList.length > KCMKeyboardIPC.KeyboardLayoutSocket.layout
+            ? KCMKeyboardIPC.KeyboardLayoutSocket.layoutsList[KCMKeyboardIPC.KeyboardLayoutSocket.layout].longName
+            : ""
+
+    // Derive a country code for the flag/label
+    function countryCode() {
+        const list = KCMKeyboardIPC.KeyboardLayoutSocket.layoutsList;
+        const idx = KCMKeyboardIPC.KeyboardLayoutSocket.layout;
+        if (idx < 0 || idx >= list.length) {
+            return KCMKeyboard.Flags.getDefaultCountryCode();
         }
+        const sn = list[idx].shortName;
+        if (sn && sn.length >= 2) {
+            return sn;
+        }
+        const ln = list[idx].longName || "";
+        const m = ln.match(/\(([A-Za-z]{2,3})\)/);
+        if (m) {
+            return m[1];
+        }
+        return KCMKeyboard.Flags.getDefaultCountryCode();
+    }
+
+    fullRepresentation: Item {
+        id: fullRepresentation
 
         PlasmaCore.ToolTipArea {
             anchors.fill: parent
@@ -42,60 +70,46 @@ PlasmoidItem {
 
         Instantiator {
             id: actionsInstantiator
-            model: switcher.keyboardLayout.layoutsList
+            model: KCMKeyboardIPC.KeyboardLayoutSocket.layoutsList
             delegate: PlasmaCore.Action {
-                required property string longName
-                required property string shortName
+                required property var modelData
                 required property int index
 
-                text: longName
-                icon.icon: KCMKeyboard.Flags.getIcon(shortName)
-                onTriggered: {
-                    root.layoutSelected(index);
-                }
+                text: modelData.longName
+                icon.icon: KCMKeyboard.Flags.getIcon(
+                    (modelData.shortName && modelData.shortName.length >= 2)
+                        ? modelData.shortName
+                        : root.countryCode())
+                onTriggered: KCMKeyboardIPC.KeyboardLayoutSocket.setLayout(index)
             }
             onObjectAdded: (index, object) => {
-                Plasmoid.contextualActions.push(object)
+                const actions = [...root.layoutActions];
+                actions.splice(index, 0, object);
+                root.layoutActions = actions;
             }
             onObjectRemoved: (index, object) => {
-                Plasmoid.contextualActions.splice(Plasmoid.contextualActions.indexOf(object), 1)
+                const actions = [...root.layoutActions];
+                actions.splice(index, 1);
+                root.layoutActions = actions;
             }
         }
 
-        Connections {
-            target: root
-
-            function onLayoutSelected(layoutIndex) {
-               switcher.keyboardLayout.layout = layoutIndex;
-            }
-        }
-
-        Connections {
-            target: Plasmoid
-
-            function onActivated() {
-                switcher.keyboardLayout.switchToNextLayout()
-            }
-        }
-
-        Kirigami.Icon {
+        Text {
             id: flag
 
             anchors.fill: parent
 
-            visible: valid && (Plasmoid.configuration.displayStyle === 1 || Plasmoid.configuration.displayStyle === 2)
+            visible: Plasmoid.configuration.displayStyle === 1
 
-            active: switcher.containsMouse
-            source: KCMKeyboard.Flags.getIcon(switcher.layoutNames.shortName)
-
-            BadgeOverlay {
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-
-                visible: !countryCode.visible && Plasmoid.configuration.displayStyle === 2
-
-                text: countryCode.text
-                icon: flag
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.family: "Noto Color Emoji"
+            font.pixelSize: Math.min(width, height) * 0.8
+            text: {
+                const cc = root.countryCode();
+                if (cc.length < 2) return "";
+                return String.fromCodePoint(0x1F1E6 + cc.toUpperCase().charCodeAt(0) - 65,
+                                            0x1F1E6 + cc.toUpperCase().charCodeAt(1) - 65);
             }
         }
 
@@ -103,24 +117,17 @@ PlasmoidItem {
             id: countryCode
 
             anchors.centerIn: parent
-            width: Math.min(switcher.width, switcher.height)
+            width: Math.min(fullRepresentation.width, fullRepresentation.height)
             height: width
 
-            visible: Plasmoid.configuration.displayStyle === 0 || !flag.valid
+            visible: Plasmoid.configuration.displayStyle === 0
 
             font.pointSize: height || Kirigami.Theme.defaultFont.pointSize
             fontSizeMode: Text.Fit
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            text: switcher.layoutNames.displayName || switcher.layoutNames.shortName
+            text: root.countryCode().toUpperCase()
             textFormat: Text.PlainText
-        }
-    }
-
-    function actionTriggered(actionName) {
-        const layoutIndex = parseInt(actionName);
-        if (!isNaN(layoutIndex)) {
-            layoutSelected(layoutIndex);
         }
     }
 }
